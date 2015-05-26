@@ -6,26 +6,63 @@ using System.Threading.Tasks;
 
 namespace MonopolyKata
 {
-    public class Player
+    public class Player: Monopoly 
     {
-        public Int32 currentLocation;
+        private Int32 currentLocation;
+        private Int32 accountBalance;
 
         public Int32 rollOrder {get; set;}
         public Player()
         {
+            
             currentLocation = 0;
+            accountBalance = 0;
+        }
+        public Int32 getAccountBalance()
+        {
+            return accountBalance;
         }
 
+        private void adjustAccountFunds(Int32 location)
+        {
+            //if this is Go, receive 200
+            if (getObjectFromBoard(location).name == "Go")
+            {
+                accountBalance += 200;
+            }
+            //if passing go
+
+
+            else if (getObjectFromBoard(location).name == "Go To Jail")
+            {
+            }
+            else if (getObjectFromBoard(location).name == "Income Tax")
+            {
+                if (accountBalance * (.20) > 200)
+                {
+                    accountBalance -= 200;
+                }
+                else
+                {
+                    accountBalance -= (Int32)(accountBalance * (.20));
+                }
+            }
+            else if (getObjectFromBoard(location).name == "Luxury Tax")
+            {
+                accountBalance -= 75;
+            }
+        }
         public Int32 getCurrentLocation()
         {
             return currentLocation;
         }
-
+ 
         private void setNewLocation(Int32 value)
         {
             if ((currentLocation + value) <= 40)
             {
                 currentLocation += value;
+                
             }
             else
             {
@@ -36,7 +73,10 @@ namespace MonopolyKata
                     count++;
                 }
                 currentLocation = value - count;
+              
             }
+            adjustAccountFunds(currentLocation);
+
         }
 
         public Int32 rollDicePair()
