@@ -21,6 +21,24 @@ namespace MonopolyKata
             order.Add(RollOrder[1], player2);
             order.Add(RollOrder[2], player3);
             order.Add(RollOrder[3], player4);
+            RunMonopoly();
+        }
+        public Player GetPlayer(Int32 number)
+        {
+            switch (number)
+            {
+                case 1:
+                    return player1;
+                case 2:
+                    return player2;
+                case 3:
+                    return player3;
+                case 4:
+                    return player4;
+                default:
+                    return null;
+
+            }
         }
 
         public Int32 DistinctOrder()
@@ -34,15 +52,11 @@ namespace MonopolyKata
             RollOrder[0] = order.Next(1, 4);
             RollOrder[1] = order.Next(1, 4);
             while(RollOrder[1] == RollOrder[0])
-            {
                 RollOrder[1] = order.Next(1, 4);
-            }
 
             RollOrder[2] = order.Next(1, 4);
             while (RollOrder[2] == RollOrder[1] || RollOrder[2] == RollOrder[0])
-            {
                 RollOrder[2] = order.Next(1, 4);
-            }
 
             var tempValue = (RollOrder[0] + RollOrder[1] + RollOrder[2]);
             switch (tempValue)
@@ -61,5 +75,21 @@ namespace MonopolyKata
                     break;
             }
         }
+
+        public void RunMonopoly()
+        {
+            var i = 0;
+            while (i < 20)
+            {
+                var j = 1;
+                while (j < 5){
+                    order[j].RollDicePair();
+                    j++;
+                }
+
+                i++;
+            }
+        }
+
     }
 }

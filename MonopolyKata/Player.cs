@@ -5,8 +5,8 @@ namespace MonopolyKata
 {
     public class Player
     {
-        public Int32 currentLocation { get; set; }
-        public Int32 accountBalance { get; set; }
+        public Int32 currentLocation {get; set;}
+        public Int32 accountBalance {get; set;}
         public Board gameBoard = new Board();
 
         public Int32 rollOrder {get; set;}
@@ -79,5 +79,6 @@ namespace MonopolyKata
             SetNewLocation(tempV);
             return tempV;
         }
+
     }
 }

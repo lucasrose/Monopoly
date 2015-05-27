@@ -7,4 +7,3 @@ C:\Users\lrose\Documents\Monopoly\MonopolyKata\bin\Debug\MonopolyKata.dll
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\bin\Debug\MonopolyKata.pdb
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\obj\Debug\MonopolyKata.dll
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\obj\Debug\MonopolyKata.pdb
-C:\Users\lrose\Documents\Monopoly\MonopolyKata\obj\Debug\MonopolyKata.csprojResolveAssemblyReference.cache

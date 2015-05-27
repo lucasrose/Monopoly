@@ -55,7 +55,6 @@ namespace MonopolyKata
             gameBoard.Add(new BoardSlot("Luxury Tax", null, -75));
             gameBoard.Add(new BoardSlot("Boardwalk", "Blue", 400));
             gameBoard.Add(new BoardSlot("Just Visiting", null, 0));
-
         }
 
         public String GetName(Int32 location)

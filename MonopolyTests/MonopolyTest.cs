@@ -13,6 +13,13 @@ namespace MonopolyKata
             Assert.AreEqual(10, monopoly.DistinctOrder());
         }
 
+        [TestMethod]
+        public void TestFullGame()
+        {
+            var player1Money = monopoly.GetPlayer(1).accountBalance;
+
+            Assert.AreNotEqual(0, player1Money);
+        }
 
     }
 }

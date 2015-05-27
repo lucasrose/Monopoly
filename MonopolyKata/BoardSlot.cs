@@ -14,5 +14,6 @@ namespace MonopolyKata
             this.amount = amount;
             this.color = color;
         }
+
     }
 }

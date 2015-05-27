@@ -78,5 +78,6 @@ namespace MonopolyTests
             var accountBalance = player1.GetAccountBalance();
             Assert.AreEqual(925, accountBalance);
         }
+
     }
 }
