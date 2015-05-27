@@ -1,68 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MonopolyKata
 {
-    public class Player: Monopoly 
+    public class Player
     {
-        private Int32 currentLocation;
-        private Int32 accountBalance;
+        public Int32 currentLocation { get; set; }
+        public Int32 accountBalance { get; set; }
+        public Board gameBoard = new Board();
 
         public Int32 rollOrder {get; set;}
         public Player()
         {
-            
             currentLocation = 0;
             accountBalance = 0;
         }
-        public Int32 getAccountBalance()
+        public Int32 GetAccountBalance()
         {
             return accountBalance;
         }
 
-        private void adjustAccountFunds(Int32 location)
+        public void AdjustAccountFunds(Int32 location)
         {
-            //if this is Go, receive 200
-            if (getObjectFromBoard(location).name == "Go")
+            switch (gameBoard.GetName(location))
             {
-                accountBalance += 200;
-            }
-            //if passing go
-
-
-            else if (getObjectFromBoard(location).name == "Go To Jail")
-            {
-            }
-            else if (getObjectFromBoard(location).name == "Income Tax")
-            {
-                if (accountBalance * (.20) > 200)
-                {
-                    accountBalance -= 200;
-                }
-                else
-                {
-                    accountBalance -= (Int32)(accountBalance * (.20));
-                }
-            }
-            else if (getObjectFromBoard(location).name == "Luxury Tax")
-            {
-                accountBalance -= 75;
+                case "Go":
+                    accountBalance += 200;
+                    break;
+                case "Go To Jail":
+                    currentLocation = 41;
+                    break;
+                case "Income Tax":
+                    if (accountBalance * (.20) > 200)
+                        accountBalance -= 200;
+                    else
+                        accountBalance -= (Int32)(accountBalance * (.20));
+                    break;
+                case "Luxury Tax":
+                    accountBalance -= 75;
+                    break;
+                default:
+                    break;
             }
         }
-        public Int32 getCurrentLocation()
+
+        public Int32 GetCurrentLocation()
         {
             return currentLocation;
         }
  
-        private void setNewLocation(Int32 value)
+        private void SetNewLocation(Int32 value)
         {
             if ((currentLocation + value) <= 40)
             {
                 currentLocation += value;
-                
             }
             else
             {
@@ -72,20 +63,21 @@ namespace MonopolyKata
                     currentLocation += value;
                     count++;
                 }
-                currentLocation = value - count;
-              
-            }
-            adjustAccountFunds(currentLocation);
 
+                if (currentLocation > 40)
+                    accountBalance += 200;
+
+                currentLocation = value - count;
+            }
+            AdjustAccountFunds(currentLocation);
         }
 
-        public Int32 rollDicePair()
+        public Int32 RollDicePair()
         {
             Random dice = new Random();
             var tempV = dice.Next(1, 6) + dice.Next(1, 6);
-            setNewLocation(tempV);
+            SetNewLocation(tempV);
             return tempV;
         }
-
     }
 }
