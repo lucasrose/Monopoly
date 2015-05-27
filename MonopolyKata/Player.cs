@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace MonopolyKata
@@ -8,6 +9,11 @@ namespace MonopolyKata
         public Int32 currentLocation {get; set;}
         public Int32 accountBalance {get; set;}
         public Board gameBoard = new Board();
+
+        public List <String> ownedProperties = new List<String>();
+        public List<String> mortgagedProperties = new List<String>();
+
+        
 
         public Int32 rollOrder {get; set;}
         public Player()
@@ -20,7 +26,7 @@ namespace MonopolyKata
             return accountBalance;
         }
 
-        public void AdjustAccountFunds(Int32 location)
+        public void BasicAccountTransfers(Int32 location)
         {
             switch (gameBoard.GetName(location))
             {
@@ -69,8 +75,41 @@ namespace MonopolyKata
 
                 currentLocation = value - count;
             }
-            AdjustAccountFunds(currentLocation);
+            BasicAccountTransfers(currentLocation);
+            PurchaseProperties(currentLocation);
+
         }
+
+        private void PurchaseProperties(Int32 currentLocation)
+        {
+            var property = gameBoard.GetName(currentLocation);
+
+            switch (gameBoard.GetStatus(currentLocation))
+            {
+                case "AVAILABLE":
+                    ownedProperties.Add(property);
+                    ChargeAccount(currentLocation);
+                    gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
+                    break;
+                case "UNAVAILABLE":
+                    PayRent(currentLocation);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        private void ChargeAccount(int currentLocation)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PayRent(int currentLocation)
+        {
+            throw new NotImplementedException();
+        }
+   
 
         public Int32 RollDicePair()
         {

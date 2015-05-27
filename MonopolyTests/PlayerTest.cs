@@ -26,7 +26,7 @@ namespace MonopolyTests
         public void TestGoToJail()
         {
             var currentLocation = player1.currentLocation = 30;
-            player1.AdjustAccountFunds(currentLocation);
+            player1.BasicAccountTransfers(currentLocation);
             var justVisiting = player1.GetCurrentLocation();
             Assert.AreEqual(41, justVisiting);
         }
@@ -35,7 +35,7 @@ namespace MonopolyTests
         public void TestLandGo()
         {
             var currentLocation = player1.currentLocation = 0;
-            player1.AdjustAccountFunds(currentLocation);
+            player1.BasicAccountTransfers(currentLocation);
             var accountBalance = player1.GetAccountBalance();
             Assert.AreEqual(200, accountBalance);
         }
@@ -54,7 +54,7 @@ namespace MonopolyTests
         {
             player1.accountBalance = 1000;
             var currentLocation = player1.currentLocation = 4;
-            player1.AdjustAccountFunds(currentLocation);
+            player1.BasicAccountTransfers(currentLocation);
             var accountBalance = player1.GetAccountBalance();
             Assert.AreEqual(800, accountBalance);
         }
@@ -64,7 +64,7 @@ namespace MonopolyTests
         {
             player1.accountBalance = 60;
             var currentLocation = player1.currentLocation = 4;
-            player1.AdjustAccountFunds(currentLocation);
+            player1.BasicAccountTransfers(currentLocation);
             var accountBalance = player1.GetAccountBalance();
             Assert.AreEqual(48, accountBalance);
         }
@@ -74,10 +74,9 @@ namespace MonopolyTests
         {
             player1.accountBalance = 1000;
             var currentLocation = player1.currentLocation = 38;
-            player1.AdjustAccountFunds(currentLocation);
+            player1.BasicAccountTransfers(currentLocation);
             var accountBalance = player1.GetAccountBalance();
             Assert.AreEqual(925, accountBalance);
         }
-
     }
 }

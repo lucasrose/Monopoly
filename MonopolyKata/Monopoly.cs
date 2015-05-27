@@ -21,7 +21,7 @@ namespace MonopolyKata
             order.Add(RollOrder[1], player2);
             order.Add(RollOrder[2], player3);
             order.Add(RollOrder[3], player4);
-            RunMonopoly();
+            RunMonopoly(20);
         }
         public Player GetPlayer(Int32 number)
         {
@@ -76,10 +76,10 @@ namespace MonopolyKata
             }
         }
 
-        public void RunMonopoly()
+        public void RunMonopoly(Int32 numberOfGames)
         {
             var i = 0;
-            while (i < 20)
+            while (i < numberOfGames)
             {
                 var j = 1;
                 while (j < 5){
