@@ -11,6 +11,8 @@ namespace MonopolyKata
         private Player player3 = new Player();
         private Player player4 = new Player();
         public Dictionary<Int32, Player> order = new Dictionary<Int32, Player>();
+        public Board gameBoard = new Board();
+
         private Int32[] RollOrder = { 0, 0, 0, 0 };
         
         public Monopoly()
@@ -83,7 +85,11 @@ namespace MonopolyKata
             {
                 var j = 1;
                 while (j < 5){
-                    order[j].RollDicePair();
+                    order[j].RollDicePair(gameBoard);
+                    var rent = order[j].OwedRent(gameBoard);
+                    
+                    
+
                     j++;
                 }
 
