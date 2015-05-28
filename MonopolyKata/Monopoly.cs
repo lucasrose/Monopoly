@@ -85,11 +85,15 @@ namespace MonopolyKata
             {
                 var j = 1;
                 while (j < 5){
+                    //roll dice
                     order[j].RollDicePair(gameBoard);
-                    var rent = order[j].OwedRent(gameBoard);
+                    var currentLocation = order[j].currentLocation;
+                    order[j].BasicAccountTransfers(currentLocation, gameBoard);
+                    order[j].PurchaseProperties(currentLocation, gameBoard);
+                    //buy or pay rent on property
+                   // var rent = order[j].OwedRent(gameBoard);   //Monopoly or Player Class?
+                    //check for if other players own each property
                     
-                    
-
                     j++;
                 }
 

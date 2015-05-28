@@ -52,7 +52,7 @@ namespace MonopolyKata
         public Int32 GetCurrentLocation()
         {
             return currentLocation;
-        }
+        } 
  
         private void SetNewLocation(Int32 value, Board gameBoard)
         {
@@ -68,18 +68,17 @@ namespace MonopolyKata
                     currentLocation += value;
                     count++;
                 }
-
+                //manage passing go
                 if (currentLocation > 40)
                     accountBalance += 200;
 
                 currentLocation = value - count;
             }
-            BasicAccountTransfers(currentLocation, gameBoard);
-            PurchaseProperties(currentLocation, gameBoard);
-
+            //BasicAccountTransfers(currentLocation, gameBoard);
+            //PurchaseProperties(currentLocation, gameBoard);
         }
 
-        private void PurchaseProperties(Int32 currentLocation, Board gameBoard)
+        public void PurchaseProperties(Int32 currentLocation, Board gameBoard)
         {
             var property = gameBoard.GetName(currentLocation);
 
