@@ -82,21 +82,9 @@ namespace MonopolyKata
         {
             var property = gameBoard.GetName(currentLocation);
 
-            switch (gameBoard.GetStatus(currentLocation))
-            {
-                case "AVAILABLE":
-                    ownedProperties.Add(property);
-                    ChargeAccount(currentLocation, gameBoard);
-                    gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
-                    break;
-                case "UNAVAILABLE":
-                    OwedRent(gameBoard);
-                    break;
-                case "LOCKED":
-                    //do other
-                    break;
-            }
-
+            ownedProperties.Add(property);
+            ChargeAccount(currentLocation, gameBoard);
+            gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
         }
 
         private void ChargeAccount(int currentLocation, Board gameBoard)
@@ -107,22 +95,7 @@ namespace MonopolyKata
 
         public Int32 OwedRent(Board gameBoard)
         {
-            switch (gameBoard.GetType(currentLocation))
-            {
-                case "Property":
-                    //check colors (all or one owned by a single person)
-                    break;
-                case "Utility":
-                    //1 = 4*dice roll , 2 = 4*dice roll
-                    //check if the one landed on the other person owns as well,
-                    //if they do pay 4* dice roll
-                    break;
-                case "Railroad":
-                    //check if player owns 1,2,3,4 properties 25, 50, 100, 200
-                    break;
-                case "Special":
-                    break;
-            }
+            
             return 0;
             //check all properties in color group
             //properties (all properties of color group, rent doubles)

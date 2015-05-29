@@ -89,9 +89,37 @@ namespace MonopolyKata
                     order[j].RollDicePair(gameBoard);
                     var currentLocation = order[j].currentLocation;
                     order[j].BasicAccountTransfers(currentLocation, gameBoard);
-                    order[j].PurchaseProperties(currentLocation, gameBoard);
+                    //buy properties
+                    switch(gameBoard.GetStatus(currentLocation)){
+                        case "UNAVAILABLE":
+                            if (gameBoard.GetOwnerName(currentLocation) != order[j].ToString()){
+                                //you dont own it, its taken, determine who does, its type and how much rent is owed
+                                DetermineOwnerOfLocation(currentLocation);
+                                //determine who owns it, and how many of the same ones they have
+                                CaclulatePropertyRentOwed(currentLocation);
+                                //check property type
+                                
+                                order[j].OwedRent(gameBoard);
+                            }
+                            break;
+                        case "AVAILABLE":
+                            order[j].PurchaseProperties(currentLocation, gameBoard);
+                            gameBoard.SetOwnerName(currentLocation, order[j].ToString());
+                            break;
+                        case "LOCKED":
+                            //do something
+                            break;
+                        
+                    }
+                    //check if you dont own it and that its taken
+                        //check who owns it
+                        
+                        
+
+                        //create transfer of money
+
                     //buy or pay rent on property
-                   // var rent = order[j].OwedRent(gameBoard);   //Monopoly or Player Class?
+                    // var rent = order[j].OwedRent(gameBoard);   //Monopoly or Player Class?
                     //check for if other players own each property
                     
                     j++;
@@ -99,6 +127,32 @@ namespace MonopolyKata
 
                 i++;
             }
+        }
+
+        private void DetermineOwnerOfLocation(Int32 currentLocation)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Int32 CaclulatePropertyRentOwed(Int32 currentLocation)
+        {
+            switch (gameBoard.GetType(currentLocation))
+            {
+                case "Property":
+                    //check colors (all or one owned by a single person)
+                    break;
+                case "Utility":
+                    //1 = 4*dice roll , 2 = 4*dice roll
+                    //check if the one landed on the other person owns as well,
+                    //if they do pay 4* dice roll
+                    break;
+                case "Railroad":
+                    //check if player owns 1,2,3,4 properties 25, 50, 100, 200
+                    break;
+                case "Special":
+                    break;
+            }
+            return 0;
         }
 
     }
