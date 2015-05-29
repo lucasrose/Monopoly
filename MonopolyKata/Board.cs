@@ -57,9 +57,9 @@ namespace MonopolyKata
             gameBoard.Add(NewItem("Just Visiting", null, 0, "Locked", "Special", null, 0));
         }
 
-        public BoardSlot NewItem(String name, String color, Int32 amount, String status, String type, String playerName, Int32 initialRent)
+        public BoardSlot NewItem(String name, String color, Int32 amount, String status, String type, String ownerName, Int32 initialRent)
         {
-            return new BoardSlot(name, color, amount, status, type, playerName, initialRent);
+            return new BoardSlot(name, color, amount, status, type, ownerName, initialRent);
         }
         public String GetName(Int32 location)
         {
@@ -99,6 +99,8 @@ namespace MonopolyKata
         {
             gameBoard[location].status = propertyStatus;
         }
+
+
 
     }
 }

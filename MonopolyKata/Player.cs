@@ -10,6 +10,7 @@ namespace MonopolyKata
         public Int32 accountBalance {get; set;}
 
         public List <String> ownedProperties = new List<String>();
+        public Dictionary<String, String> propertyColor = new Dictionary<String, String>();
         public List<String> mortgagedProperties = new List<String>();
 
         private Int32 currentDiceRoll = 0;
@@ -81,8 +82,10 @@ namespace MonopolyKata
         public void PurchaseProperties(Int32 currentLocation, Board gameBoard)
         {
             var property = gameBoard.GetName(currentLocation);
+            var color = gameBoard.GetColor(currentLocation);
 
             ownedProperties.Add(property);
+            propertyColor.Add(property, color);
             ChargeAccount(currentLocation, gameBoard);
             gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
         }

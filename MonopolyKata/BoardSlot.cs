@@ -11,14 +11,14 @@ namespace MonopolyKata
         public String type;
         public String ownerName;
         public Int32 initialRent;
-        public BoardSlot(String name, String color, Int32 amount, String status, String type, String playerName, Int32 initialRent)
+        public BoardSlot(String name, String color, Int32 amount, String status, String type, String ownerName, Int32 initialRent)
         {
             this.name = name;
             this.amount = amount;
             this.color = color;
             this.status = status;
             this.type = type;
-            this.ownerName = playerName;
+            this.ownerName = ownerName;
             this.initialRent = initialRent;
         }
 
