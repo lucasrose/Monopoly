@@ -91,7 +91,7 @@ namespace MonopolyKata
             {
                 var j = 1;
                 while (j < 5){
-                    var MoneyTransfer = 0;
+                    //var MoneyTransfer = 0;
                     //roll dice
                     order[j].RollDicePair(gameBoard);
                     var currentLocation = order[j].currentLocation;
@@ -144,10 +144,12 @@ namespace MonopolyKata
             var multiplier = 1;
             var count = 0;
             var person = stringToPlayer[owner];
+            var type = gameBoard.GetType(currentLocation);
+            var color = gameBoard.GetColor(currentLocation);
+
             switch (gameBoard.GetType(currentLocation))
             {
                 case "Property":
-                    var color = gameBoard.GetColor(currentLocation);
                     foreach (String element in person.ownedProperties)
                     {
                         if (person.propertyColor[element] == color)
@@ -158,20 +160,41 @@ namespace MonopolyKata
                         multiplier = 2;
                     else if (count == 3 && color != "Blue" && color != "Pink" && color != null)
                         multiplier = 3;
-                    
                     //check if all properties(colors) owned by the person counter
                     break;
                 case "Utility":
                     //check if both utilities are owned
+                    
+                    foreach(String element in person.ownedProperties)
+                        if (person.typeOfProperty[element] == type)
+                            count++;
+                    if (count == 2)
+                        multiplier = 10 / 4;
                     break;
                 case "Railroad":
                     //count how many railroads are owned
+                    foreach(String element in person.ownedProperties)
+                        if (person.typeOfProperty[element] == type)
+                            count++;
+                    switch (count)
+                    {
+                        case 2:
+                            multiplier = 2;
+                            break;
+                        case 3:
+                            multiplier = 4;
+                            break;
+                        case 4:
+                            multiplier = 8;
+                            break;
+                    }
+
                     break;
                 case "Special":
                     break;
             }
 
-            return 0;
+            return multiplier;
         }
 
         private String DetermineOwnerOfLocation(Int32 currentLocation)
