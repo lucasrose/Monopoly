@@ -18,7 +18,7 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void TestDiceRoll()
+        public void TestRollDice()
         {
             Assert.IsTrue(player1.RollDicePair(gameBoard) >= 1 || player1.RollDicePair(gameBoard) <= 12);
         }
