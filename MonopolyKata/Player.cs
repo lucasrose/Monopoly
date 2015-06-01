@@ -98,22 +98,6 @@ namespace MonopolyKata
             accountBalance -= price;
         }
 
-        public Int32 OwedRent(Board gameBoard)
-        {
-            
-            return 0;
-            //check all properties in color group
-            //properties (all properties of color group, rent doubles)
-            //one utility, rent = 4* value on dice, 2 utilities, rent = 10 * value on dice
-            //railroads 1 railroad 25, 2 railroads 50, 3 - 100, 4, 200
-        }
-
-        public Int32 TransferMoney(Int32 currentLocation)
-        {
-            return 0;
-        }
-   
-
         public Int32 RollDicePair(Board gameBoard)
         {
             Random dice = new Random();

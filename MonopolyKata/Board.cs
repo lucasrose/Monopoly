@@ -100,6 +100,10 @@ namespace MonopolyKata
             gameBoard[location].status = propertyStatus;
         }
 
+        public Int32 GetInitialRent(Int32 location)
+        {
+            return gameBoard[location].initialRent;
+        }
 
 
     }
