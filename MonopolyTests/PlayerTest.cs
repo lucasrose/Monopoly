@@ -22,7 +22,7 @@ namespace MonopolyTests
         {
             Assert.IsTrue(player1.RollDicePair(gameBoard) >= 1 || player1.RollDicePair(gameBoard) <= 12);
         }
-        
+
         [TestMethod]
         public void TestGoToJail()
         {

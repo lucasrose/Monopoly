@@ -15,7 +15,7 @@ namespace MonopolyKata
         public Board gameBoard = new Board();
 
         private Int32[] RollOrder = { 0, 0, 0, 0 };
-        
+
         public Monopoly()
         {
             DetermineOrder();
@@ -59,7 +59,7 @@ namespace MonopolyKata
             Random order = new Random();
             RollOrder[0] = order.Next(1, 4);
             RollOrder[1] = order.Next(1, 4);
-            while(RollOrder[1] == RollOrder[0])
+            while (RollOrder[1] == RollOrder[0])
                 RollOrder[1] = order.Next(1, 4);
 
             RollOrder[2] = order.Next(1, 4);
@@ -84,33 +84,32 @@ namespace MonopolyKata
             }
         }
 
-        public void RunMonopoly(Int32 numberOfGames)
+        public void RunMonopoly(Int32 numberOfRounds)
         {
             var i = 0;
-            while (i < numberOfGames)
+            while (i < numberOfRounds)
             {
                 var j = 1;
-                while (j < 5){
+                while (j < 5)
+                {
                     //var MoneyTransfer = 0;
                     //roll dice
                     order[j].RollDicePair(gameBoard);
                     var currentLocation = order[j].currentLocation;
                     order[j].BasicAccountTransfers(currentLocation, gameBoard);
                     //buy properties
-                    switch(gameBoard.GetStatus(currentLocation)){
+                    switch (gameBoard.GetStatus(currentLocation))
+                    {
                         case "UNAVAILABLE":
-                            if (gameBoard.GetOwnerName(currentLocation) != order[j].ToString()){
-                                // determine who does own it
+                            if (gameBoard.GetOwnerName(currentLocation) != order[j].ToString())
+                            {
                                 var owner = DetermineOwnerOfLocation(currentLocation);
-                                //its type
                                 var type = gameBoard.GetType(currentLocation);
                                 var multiplier = CalculateMultipleGroupMultiplier(owner, currentLocation);
                                 var ownerOfProperty = stringToPlayer[owner];
                                 var rentOwed = gameBoard.GetInitialRent(currentLocation) * multiplier;
-                                
-                                //dock rent from ownee
+
                                 order[j].accountBalance -= rentOwed;
-                                //pay owner
                                 ownerOfProperty.accountBalance += rentOwed;
                             }
                             break;
@@ -118,11 +117,11 @@ namespace MonopolyKata
                             order[j].PurchaseProperties(currentLocation, gameBoard);
                             gameBoard.SetOwnerName(currentLocation, order[j].ToString());
                             break;
-                        case "LOCKED": //means its some special spot in the game
+                        case "LOCKED":
                             //do something
                             break;
-                        
-                    }                   
+
+                    }
                     j++;
                 }
 
@@ -145,26 +144,22 @@ namespace MonopolyKata
                     {
                         if (person.propertyColor[element] == color)
                             count++;
-                        //is a part of the same color group
                     }
                     if (count == 2 && color == "Blue" || color == "Pink")
                         multiplier = 2;
                     else if (count == 3 && color != "Blue" && color != "Pink" && color != null)
                         multiplier = 3;
-                    //check if all properties(colors) owned by the person counter
                     break;
                 case "Utility":
-                    //check if both utilities are owned
-                    
-                    foreach(String element in person.ownedProperties)
+
+                    foreach (String element in person.ownedProperties)
                         if (person.typeOfProperty[element] == type)
                             count++;
                     if (count == 2)
                         multiplier = 10 / 4;
                     break;
                 case "Railroad":
-                    //count how many railroads are owned
-                    foreach(String element in person.ownedProperties)
+                    foreach (String element in person.ownedProperties)
                         if (person.typeOfProperty[element] == type)
                             count++;
                     switch (count)
@@ -190,7 +185,7 @@ namespace MonopolyKata
 
         private String DetermineOwnerOfLocation(Int32 currentLocation)
         {
-           return gameBoard.GetOwnerName(currentLocation);
+            return gameBoard.GetOwnerName(currentLocation);
         }
 
     }

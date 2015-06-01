@@ -6,17 +6,17 @@ namespace MonopolyKata
 {
     public class Player
     {
-        public Int32 currentLocation {get; set;}
-        public Int32 accountBalance {get; set;}
+        public Int32 currentLocation { get; set; }
+        public Int32 accountBalance { get; set; }
 
-        public List <String> ownedProperties = new List<String>();
+        public List<String> ownedProperties = new List<String>();
         public Dictionary<String, String> propertyColor = new Dictionary<String, String>();
         public Dictionary<String, String> typeOfProperty = new Dictionary<String, String>();
         public List<String> mortgagedProperties = new List<String>();
 
         private Int32 currentDiceRoll = 0;
 
-        public Int32 rollOrder {get; set;}
+        public Int32 rollOrder { get; set; }
         public Player()
         {
             currentLocation = 0;
@@ -54,8 +54,8 @@ namespace MonopolyKata
         public Int32 GetCurrentLocation()
         {
             return currentLocation;
-        } 
- 
+        }
+
         private void SetNewLocation(Int32 value, Board gameBoard)
         {
             if ((currentLocation + value) <= 40)
@@ -70,14 +70,11 @@ namespace MonopolyKata
                     currentLocation += value;
                     count++;
                 }
-                //manage passing go
                 if (currentLocation > 40)
                     accountBalance += 200;
 
                 currentLocation = value - count;
             }
-            //BasicAccountTransfers(currentLocation, gameBoard);
-            //PurchaseProperties(currentLocation, gameBoard);
         }
 
         public void PurchaseProperties(Int32 currentLocation, Board gameBoard)
