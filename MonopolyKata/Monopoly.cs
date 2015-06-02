@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public class Monopoly
-    {
-        public Dictionary<Int32, Player> Order = new Dictionary<Int32, Player>();
-        public Dictionary<Owner, Player> OwnerToPlayer = new Dictionary<Owner, Player>();
+    public class Monopoly                                                                                               //Total Usage for Class: 9 Objects/Instances created | Total Calls To Other Classes: 18
+    {                                                                                                                   //Breakdown:
+        public Dictionary<Int32, Player> Order = new Dictionary<Int32, Player>();                                       //3 Dictionaries
+        public Dictionary<Owner, Player> OwnerToPlayer = new Dictionary<Owner, Player>();                   
         public Dictionary<Player, Owner> PlayerToOwner = new Dictionary<Player, Owner>();
-        public Board GameBoard = new Board();
-        private Player player1 = new Player();
+        public Board GameBoard = new Board();                                                                           //1 Gameboard
+        private Player player1 = new Player();                                                                          //4 Players
         private Player player2 = new Player();
         private Player player3 = new Player();
         private Player player4 = new Player();
-        private Int32[] rollOrder = { 0, 0, 0, 0 };
+        private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                     //1 Int Array
 
         public Monopoly()
         {
             DetermineOrder();
             DistinctOrder();
-            OwnerToPlayer.Add(Owner.PLAYER_ONE, player1);
+            OwnerToPlayer.Add(Owner.PLAYER_ONE, player1);                                                 
             OwnerToPlayer.Add(Owner.PLAYER_TWO, player2);
             OwnerToPlayer.Add(Owner.PLAYER_THREE, player3);
             OwnerToPlayer.Add(Owner.PLAYER_FOUR, player4);
@@ -37,8 +37,8 @@ namespace MonopolyKata
             RunMonopoly(20);
         }
 
-        public Player GetPlayer(Int32 number)
-        {
+        public Player GetPlayer(Int32 number)                                                                           //Total Usage for Method: 4/9 Objects/Instances | Total Calls To Other Classes: 0/18
+        {                                                                                                               //4/4 Players
             switch (number)
             {
                 case 1:
@@ -55,15 +55,15 @@ namespace MonopolyKata
             }
         }
 
-        public Int32 DistinctOrder()
+        public Int32 DistinctOrder()                                                                                    //Total Usage For Method: 1/9 Objects/Instances | Total Calls To Other Classes: 0/18
         {
             return (rollOrder[0] + rollOrder[1] + rollOrder[2] + rollOrder[3]);
         }
 
-        private void DetermineOrder()
+        private void DetermineOrder()                                                                                   //Total Usage For Method: 2/9 Objects/Instances | Total Calls To Other Classes: 1/18
         {
-            Random order = new Random();
-            rollOrder[0] = order.Next(1, 4);
+            Random order = new Random();                                                                                //1 Random
+            rollOrder[0] = order.Next(1, 4);                                                                            //1 Int array
             rollOrder[1] = order.Next(1, 4);
             while (rollOrder[1] == rollOrder[0])
                 rollOrder[1] = order.Next(1, 4);
@@ -90,20 +90,20 @@ namespace MonopolyKata
             }
         }
 
-        public void RunMonopoly(Int32 maxNumberOfRounds)
+        public void RunMonopoly(Int32 maxNumberOfRounds)                                                                //Total Usage For Method: 9/9 Objects/Instances | Total Calls To Other Classes: 11/18                                   
         {
             var currentNumberOfRounds = 0;
             while (currentNumberOfRounds < maxNumberOfRounds)
             {
                 var playerNumber = 1;
-                while (playerNumber < 5)
+                while (playerNumber < 5)                                                                                //4 Players
                 {
-                    Order[playerNumber].RollDicePair(GameBoard);
+                    Order[playerNumber].RollDicePair(GameBoard);                                                        //1 Dictionary
                     var currentLocation = Order[playerNumber].CurrentLocation;
                     Order[playerNumber].BasicAccountTransfers(currentLocation, GameBoard);
-                    switch (GameBoard.GetStatus(currentLocation))
+                    switch (GameBoard.GetStatus(currentLocation))                                                       //1 GameBoard
                     {
-                        case Status.UNAVAILABLE:
+                        case Status.UNAVAILABLE:                                                                        //3 Enums
                             if (OwnerToPlayer[GameBoard.GetOwner(currentLocation)] != Order[playerNumber])
                             {
                                 var owner = GameBoard.GetOwner(currentLocation);
@@ -113,13 +113,13 @@ namespace MonopolyKata
                                 var rentOwed = GameBoard.GetRent(currentLocation) * multiplier;
 
                                 Order[playerNumber].AccountBalance -= rentOwed;
-                                ownerOfProperty.AccountBalance += rentOwed;
+                                ownerOfProperty.AccountBalance += rentOwed;                                                 
                             }
                             break;
                         case Status.AVAILABLE:
-                            Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);
+                            Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);                             
                             var player = Order[playerNumber];
-                            GameBoard.SetOwnerName(currentLocation, PlayerToOwner[player]);
+                            GameBoard.SetOwnerName(currentLocation, PlayerToOwner[player]);                                
                             break;
                         case Status.LOCKED:
                             //do something
@@ -131,18 +131,18 @@ namespace MonopolyKata
             }
         }
 
-        private Int32 CalculateMultipleGroupMultiplier(Owner owner, Int32 currentLocation)
-        {
+        private Int32 CalculateMultipleGroupMultiplier(Owner owner, Int32 currentLocation)                          //Total Usage For Method: 9/9 Objects/Instances | Total Calls To Other Classes: 6/18
+        {                                                                                                           //5 Enums
             var multiplier = 1;
             var count = 0;
-            var person = OwnerToPlayer[owner];
-            var type = GameBoard.GetType(currentLocation);
+            var person = OwnerToPlayer[owner];                                                                      //1 Dictionary
+            var type = GameBoard.GetType(currentLocation);                                                          //1 GameBoard
             var color = GameBoard.GetColor(currentLocation);
             switch (GameBoard.GetType(currentLocation))
             {
                 case Type.PROPERTY:
                     foreach (Location element in person.OwnedProperties)
-                        if (person.PropertyColor[element] == color)
+                        if (person.PropertyColor[element] == color)                                                 //1 Dictionary
                             count++;
                     if (count == 2 && color == Color.BLUE || color == Color.PINK)
                         multiplier = 2;
@@ -152,7 +152,7 @@ namespace MonopolyKata
                 case Type.UTILITY:
 
                     foreach (Location element in person.OwnedProperties)
-                        if (person.TypeOfProperty[element] == type)
+                        if (person.TypeOfProperty[element] == type)                                                 //1 Dictionary
                             count++;
                     if (count == 2)
                         multiplier = 10 / 4;
@@ -183,7 +183,7 @@ namespace MonopolyKata
 
     }
 
-
+    //Notes:
     //Land in Jail
         //draw go to jail
         //land on go to jail

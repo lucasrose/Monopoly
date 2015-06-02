@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public class Player
+    public class Player                                                                                             //Total Usage For Class: 8 Objects/Instances | Total Calls To Other Classes: 7
     {
-        public Int32 CurrentLocation { get; set; }
-        public Int32 AccountBalance { get; set; }
-        public Int32 RollOrder { get; set; }
-        public List<Location> OwnedProperties = new List<Location>();
-        public Dictionary<Location, Color> PropertyColor = new Dictionary<Location, Color>();
-        public Dictionary<Location, Type> TypeOfProperty = new Dictionary<Location, Type>();
-        public List<String> MortgagedProperties = new List<String>();
+        public Int32 CurrentLocation {get; set;}
+        public Int32 AccountBalance {get; set;}
+        public Int32 RollOrder {get; set;}
+        public List<Location> OwnedProperties = new List<Location>();                                               //1 List, 1 Enum
+        public Dictionary<Location, Color> PropertyColor = new Dictionary<Location, Color>();                       //1 Dictionary, 1 Enum
+        public Dictionary<Location, Type> TypeOfProperty = new Dictionary<Location, Type>();                        //1 Dictionary, 1 Enum
+        public List<String> MortgagedProperties = new List<String>();                                               //1 List, 1 String
         private Int32 currentDiceRoll = 0;
 
         public Player()
@@ -21,16 +21,16 @@ namespace MonopolyKata
             AccountBalance = 0;
         }
 
-        public Int32 GetAccountBalance()
+        public Int32 GetAccountBalance()                                                                            //Total Usage For Method: 0/8 Objects/Instances | Total Calls To Other Classes: 0/7
         {
             return AccountBalance;
         }
 
-        public void BasicAccountTransfers(Int32 location, Board gameBoard)
+        public void BasicAccountTransfers(Int32 location, Board gameBoard)                                          //Total Usage For Method: 2/8 Objects/Instances | Total Calls To Other Classes: 1/7
         {
-            switch (gameBoard.GetLocation(location))
+            switch (gameBoard.GetLocation(location))                                                                //1 GameBoard
             {
-                case Location.GO:
+                case Location.GO:                                                                                   //1 Enum
                     AccountBalance += 200;
                     break;
                 case Location.GO_TO_JAIL:
@@ -50,12 +50,12 @@ namespace MonopolyKata
             }
         }
 
-        public Int32 GetCurrentLocation()
+        public Int32 GetCurrentLocation()                                                                           //Total Usage For Method: 0/8 Objects/Instances | Total Calls To Other Classes: 0/7
         {
             return CurrentLocation;
         }
 
-        private void SetNewLocation(Int32 value, Board gameBoard)
+        private void SetNewLocation(Int32 value, Board gameBoard)                                                   //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 0/7
         {
             if ((CurrentLocation + value) <= 40)
             {
@@ -76,27 +76,27 @@ namespace MonopolyKata
             }
         }
 
-        public void PurchaseProperties(Int32 currentLocation, Board gameBoard)
+        public void PurchaseProperties(Int32 currentLocation, Board gameBoard)                                      //Total Usage For Method: 5/8 Objects/Instances | Total Calls To Other Classes: 4/7
         {
-            var property = gameBoard.GetLocation(currentLocation);
+            var property = gameBoard.GetLocation(currentLocation);                                                  //1 GameBoard
             var color = gameBoard.GetColor(currentLocation);
             var type = gameBoard.GetType(currentLocation);
-            OwnedProperties.Add(property);
+            OwnedProperties.Add(property);                                                                          //3 Dictionaries
             PropertyColor.Add(property, color);
             TypeOfProperty.Add(property, type);
             ChargeAccount(currentLocation, gameBoard);
-            gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);
+            gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);                                               //1 Enum
         }
 
-        private void ChargeAccount(int currentLocation, Board gameBoard)
+        private void ChargeAccount(int currentLocation, Board gameBoard)                                            //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 1/7
         {
-            var price = gameBoard.GetAmount(currentLocation);
+            var price = gameBoard.GetAmount(currentLocation);                                                       //1 GameBoard
             AccountBalance -= price;
         }
 
-        public Int32 RollDicePair(Board gameBoard)
-        {
-            Random dice = new Random();
+        public Int32 RollDicePair(Board gameBoard)                                                                  //Total Usage For Method: 2/8 Objects/Instances | Total Calls To Other Classes: 1/7
+        {                                                                                                           //1 GameBoard
+            Random dice = new Random();                                                                             //1 Random
             var numDoubles = 0;
             var dice1 = dice.Next(1, 6);
             var dice2 = dice.Next(1, 6);

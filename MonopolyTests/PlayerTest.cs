@@ -4,13 +4,13 @@ using MonopolyKata;
 namespace MonopolyTests
 {
     [TestClass]
-    public class PlayerTest
+    public class PlayerTest                                                                                 //Total Usage For Class: 2 Objects
     {
         public Player Player1 = new Player();
         public Board GameBoard = new Board();
 
         [TestMethod]
-        public void TestLocationUpdated()
+        public void TestLocationUpdated()                                                                   //Total Usage For Method: 2/2 Objects
         {
             var tempLocation = Player1.GetCurrentLocation();
             Player1.RollDicePair(GameBoard);
@@ -18,13 +18,13 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void TestRollDice()
+        public void TestRollDice()                                                                          //Total Usage For Method: 2/2  Objects
         {
             Assert.IsTrue(Player1.RollDicePair(GameBoard) >= 1 || Player1.RollDicePair(GameBoard) <= 12);
         }
 
         [TestMethod]
-        public void TestLandGo()
+        public void TestLandGo()                                                                            //Total Usage For Method: 2/2 Objects
         {
             var currentLocation = Player1.CurrentLocation = 0;
             Player1.BasicAccountTransfers(currentLocation, GameBoard);
@@ -33,7 +33,7 @@ namespace MonopolyTests
         }
 
         [TestMethod]
-        public void TestPassGo()
+        public void TestPassGo()                                                                            //Total Usage For Method: 2/2 Objects
         {
             var currentLocation = Player1.CurrentLocation = 40;
             Player1.RollDicePair(GameBoard);
@@ -41,7 +41,7 @@ namespace MonopolyTests
             Assert.AreEqual(200, accountBalance);
         }
 
-        /*
+        /*                                                              //changing with Release 4
          [TestMethod]
         public void TestGoToJail()
         {

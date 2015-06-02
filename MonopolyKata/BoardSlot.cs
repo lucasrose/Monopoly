@@ -21,7 +21,7 @@ namespace MonopolyKata
 
     public enum Owner { PLAYER_ONE, PLAYER_TWO, PLAYER_THREE, PLAYER_FOUR, NULL };
 
-    public class BoardSlot
+    public class BoardSlot                                                                                                          //Total Usage For Class: 5 Objects/Instances | Total Calls To Other Classes: 0
     {
 
         public Location Location{get; set;}
@@ -45,25 +45,5 @@ namespace MonopolyKata
             this.Rent = Rent;
         }
 
-
-
-       /*ublic Int32 Amount;
-        public String Name;
-        public String Color;
-        public String Status;
-        public String Type;
-        public String OwnerName;
-        public Int32 InitialRent;
-        */
-        /*public BoardSlot(String name, String color, Int32 amount, String status, String type, String ownerName, Int32 initialRent)
-        {
-            this.Name = name;
-            this.Amount = amount;
-            this.Color = color;
-            this.Status = status;
-            this.Type = type;
-            this.OwnerName = ownerName;
-            this.InitialRent = initialRent;
-        }*/
     }
 }
