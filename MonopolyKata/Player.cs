@@ -9,9 +9,9 @@ namespace MonopolyKata
         public Int32 CurrentLocation { get; set; }
         public Int32 AccountBalance { get; set; }
         public Int32 RollOrder { get; set; }
-        public List<String> OwnedProperties = new List<String>();
-        public Dictionary<String, String> PropertyColor = new Dictionary<String, String>();
-        public Dictionary<String, String> TypeOfProperty = new Dictionary<String, String>();
+        public List<Location> OwnedProperties = new List<Location>();
+        public Dictionary<Location, Color> PropertyColor = new Dictionary<Location, Color>();
+        public Dictionary<Location, Type> TypeOfProperty = new Dictionary<Location, Type>();
         public List<String> MortgagedProperties = new List<String>();
         private Int32 currentDiceRoll = 0;
 
@@ -28,21 +28,21 @@ namespace MonopolyKata
 
         public void BasicAccountTransfers(Int32 location, Board gameBoard)
         {
-            switch (gameBoard.GetName(location))
+            switch (gameBoard.GetLocation(location))
             {
-                case "Go":
+                case Location.GO:
                     AccountBalance += 200;
                     break;
-                case "Go To Jail":
-                    CurrentLocation = 41;
+                case Location.GO_TO_JAIL:
+                    CurrentLocation = 10;
                     break;
-                case "Income Tax":
+                case Location.INCOME_TAX:
                     if (AccountBalance * (.20) > 200)
                         AccountBalance -= 200;
                     else
                         AccountBalance -= (Int32)(AccountBalance * (.20));
                     break;
-                case "Luxury Tax":
+                case Location.LUXURY_TAX:
                     AccountBalance -= 75;
                     break;
                 default:
@@ -78,14 +78,14 @@ namespace MonopolyKata
 
         public void PurchaseProperties(Int32 currentLocation, Board gameBoard)
         {
-            var property = gameBoard.GetName(currentLocation);
+            var property = gameBoard.GetLocation(currentLocation);
             var color = gameBoard.GetColor(currentLocation);
             var type = gameBoard.GetType(currentLocation);
             OwnedProperties.Add(property);
             PropertyColor.Add(property, color);
             TypeOfProperty.Add(property, type);
             ChargeAccount(currentLocation, gameBoard);
-            gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
+            gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);
         }
 
         private void ChargeAccount(int currentLocation, Board gameBoard)

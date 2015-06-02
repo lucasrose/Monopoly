@@ -7,7 +7,8 @@ namespace MonopolyKata
     public class Monopoly
     {
         public Dictionary<Int32, Player> Order = new Dictionary<Int32, Player>();
-        public Dictionary<String, Player> StringToPlayer = new Dictionary<String, Player>();
+        public Dictionary<Owner, Player> OwnerToPlayer = new Dictionary<Owner, Player>();
+        public Dictionary<Player, Owner> PlayerToOwner = new Dictionary<Player, Owner>();
         public Board GameBoard = new Board();
         private Player player1 = new Player();
         private Player player2 = new Player();
@@ -19,10 +20,15 @@ namespace MonopolyKata
         {
             DetermineOrder();
             DistinctOrder();
-            StringToPlayer.Add("player1", player1);
-            StringToPlayer.Add("player2", player2);
-            StringToPlayer.Add("player3", player3);
-            StringToPlayer.Add("player4", player4);
+            OwnerToPlayer.Add(Owner.PLAYER_ONE, player1);
+            OwnerToPlayer.Add(Owner.PLAYER_TWO, player2);
+            OwnerToPlayer.Add(Owner.PLAYER_THREE, player3);
+            OwnerToPlayer.Add(Owner.PLAYER_FOUR, player4);
+
+            PlayerToOwner.Add(player1, Owner.PLAYER_ONE);
+            PlayerToOwner.Add(player2, Owner.PLAYER_TWO);
+            PlayerToOwner.Add(player3, Owner.PLAYER_THREE);
+            PlayerToOwner.Add(player4, Owner.PLAYER_FOUR);
 
             Order.Add(rollOrder[0], player1);
             Order.Add(rollOrder[1], player2);
@@ -97,24 +103,25 @@ namespace MonopolyKata
                     Order[playerNumber].BasicAccountTransfers(currentLocation, GameBoard);
                     switch (GameBoard.GetStatus(currentLocation))
                     {
-                        case "UNAVAILABLE":
-                            if (GameBoard.GetOwnerName(currentLocation) != Order[playerNumber].ToString())
+                        case Status.UNAVAILABLE:
+                            if (OwnerToPlayer[GameBoard.GetOwner(currentLocation)] != Order[playerNumber])
                             {
-                                var owner = DetermineOwnerOfLocation(currentLocation);
+                                var owner = GameBoard.GetOwner(currentLocation);
                                 var type = GameBoard.GetType(currentLocation);
                                 var multiplier = CalculateMultipleGroupMultiplier(owner, currentLocation);
-                                var ownerOfProperty = StringToPlayer[owner];
-                                var rentOwed = GameBoard.GetInitialRent(currentLocation) * multiplier;
+                                var ownerOfProperty = OwnerToPlayer[owner];
+                                var rentOwed = GameBoard.GetRent(currentLocation) * multiplier;
 
                                 Order[playerNumber].AccountBalance -= rentOwed;
                                 ownerOfProperty.AccountBalance += rentOwed;
                             }
                             break;
-                        case "AVAILABLE":
+                        case Status.AVAILABLE:
                             Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);
-                            GameBoard.SetOwnerName(currentLocation, Order[playerNumber].ToString());
+                            var player = Order[playerNumber];
+                            GameBoard.SetOwnerName(currentLocation, PlayerToOwner[player]);
                             break;
-                        case "LOCKED":
+                        case Status.LOCKED:
                             //do something
                             break;
                     }
@@ -124,34 +131,34 @@ namespace MonopolyKata
             }
         }
 
-        private Int32 CalculateMultipleGroupMultiplier(String owner, Int32 currentLocation)
+        private Int32 CalculateMultipleGroupMultiplier(Owner owner, Int32 currentLocation)
         {
             var multiplier = 1;
             var count = 0;
-            var person = StringToPlayer[owner];
+            var person = OwnerToPlayer[owner];
             var type = GameBoard.GetType(currentLocation);
             var color = GameBoard.GetColor(currentLocation);
             switch (GameBoard.GetType(currentLocation))
             {
-                case "Property":
-                    foreach (String element in person.OwnedProperties)
+                case Type.PROPERTY:
+                    foreach (Location element in person.OwnedProperties)
                         if (person.PropertyColor[element] == color)
                             count++;
-                    if (count == 2 && color == "Blue" || color == "Pink")
+                    if (count == 2 && color == Color.BLUE || color == Color.PINK)
                         multiplier = 2;
-                    else if (count == 3 && color != "Blue" && color != "Pink" && color != null)
+                    else if (count == 3 && color != Color.BLUE && color != Color.PINK && color != Color.NULL)
                         multiplier = 3;
                     break;
-                case "Utility":
+                case Type.UTILITY:
 
-                    foreach (String element in person.OwnedProperties)
+                    foreach (Location element in person.OwnedProperties)
                         if (person.TypeOfProperty[element] == type)
                             count++;
                     if (count == 2)
                         multiplier = 10 / 4;
                     break;
-                case "Railroad":
-                    foreach (String element in person.OwnedProperties)
+                case Type.RAILROAD:
+                    foreach (Location element in person.OwnedProperties)
                         if (person.TypeOfProperty[element] == type)
                             count++;
                     switch (count)
@@ -167,16 +174,12 @@ namespace MonopolyKata
                             break;
                     }
                     break;
-                case "Special":
+                case Type.SPECIAL:
                     break;
             }
             return multiplier;
         }
 
-        private String DetermineOwnerOfLocation(Int32 currentLocation)
-        {
-            return GameBoard.GetOwnerName(currentLocation);
-        }
 
     }
 
