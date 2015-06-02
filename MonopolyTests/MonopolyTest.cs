@@ -19,6 +19,7 @@ namespace MonopolyKata
             player3 = monopoly.GetPlayer(3);
             player4 = monopoly.GetPlayer(4);
         }
+
         [TestMethod]
         public void TestDistinctOrder()
         {
@@ -28,7 +29,7 @@ namespace MonopolyKata
         [TestMethod]
         public void TestFullGame()
         {
-            var player1Money = monopoly.GetPlayer(1).accountBalance;
+            var player1Money = monopoly.GetPlayer(1).AccountBalance;
 
             Assert.AreNotEqual(0, player1Money);
         }
@@ -36,36 +37,36 @@ namespace MonopolyKata
         [TestMethod]
         public void TestMultiplierAccountFluctuationPlayer1()
         {
-            var balanceBefore = player1.accountBalance;
+            var balanceBefore = player1.AccountBalance;
             monopoly.RunMonopoly(3);
-            var balanceAfter = player1.accountBalance;
+            var balanceAfter = player1.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 
         [TestMethod]
         public void TestMultiplierAccountFluctuationPlayer2()
         {
-            var balanceBefore = player2.accountBalance;
+            var balanceBefore = player2.AccountBalance;
             monopoly.RunMonopoly(3);
-            var balanceAfter = player2.accountBalance;
+            var balanceAfter = player2.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 
         [TestMethod]
         public void TestMultiplierAccountFluctuationPlayer3()
         {
-            var balanceBefore = player3.accountBalance;
+            var balanceBefore = player3.AccountBalance;
             monopoly.RunMonopoly(3);
-            var balanceAfter = player3.accountBalance;
+            var balanceAfter = player3.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 
         [TestMethod]
         public void TestMultiplierAccountFluctuationPlayer4()
         {
-            var balanceBefore = player4.accountBalance;
+            var balanceBefore = player4.AccountBalance;
             monopoly.RunMonopoly(3);
-            var balanceAfter = player4.accountBalance;
+            var balanceAfter = player4.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 

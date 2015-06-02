@@ -6,7 +6,7 @@ namespace MonopolyKata
     public class Board
     {
         private List<BoardSlot> gameBoard = new List<BoardSlot>();
-
+        
         public Board()
         {
             SetupBoard();
@@ -63,48 +63,47 @@ namespace MonopolyKata
         }
         public String GetName(Int32 location)
         {
-            return gameBoard[location].name;
+            return gameBoard[location].Name;
         }
 
         public String GetColor(Int32 location)
         {
-            return gameBoard[location].color;
+            return gameBoard[location].Color;
         }
 
         public Int32 GetAmount(Int32 location)
         {
-            return gameBoard[location].amount;
+            return gameBoard[location].Amount;
         }
 
         public String GetType(Int32 location)
         {
-            return gameBoard[location].type;
+            return gameBoard[location].Type;
         }
         public String GetStatus(Int32 location)
         {
-            return gameBoard[location].status;
+            return gameBoard[location].Status;
         }
 
         public void SetStatus(Int32 location, String propertyStatus)
         {
-            gameBoard[location].status = propertyStatus;
+            gameBoard[location].Status = propertyStatus;
         }
 
         public String GetOwnerName(Int32 location)
         {
-            return gameBoard[location].ownerName;
+            return gameBoard[location].OwnerName;
         }
 
         public void SetOwnerName(Int32 location, String propertyStatus)
         {
-            gameBoard[location].status = propertyStatus;
+            gameBoard[location].Status = propertyStatus;
         }
 
         public Int32 GetInitialRent(Int32 location)
         {
-            return gameBoard[location].initialRent;
+            return gameBoard[location].InitialRent;
         }
-
 
     }
 }

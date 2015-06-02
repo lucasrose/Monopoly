@@ -6,31 +6,31 @@ namespace MonopolyKata
 {
     public class Monopoly
     {
+        public Dictionary<Int32, Player> Order = new Dictionary<Int32, Player>();
+        public Dictionary<String, Player> StringToPlayer = new Dictionary<String, Player>();
+        public Board GameBoard = new Board();
         private Player player1 = new Player();
         private Player player2 = new Player();
         private Player player3 = new Player();
         private Player player4 = new Player();
-        public Dictionary<Int32, Player> order = new Dictionary<Int32, Player>();
-        public Dictionary<String, Player> stringToPlayer = new Dictionary<String, Player>();
-        public Board gameBoard = new Board();
-
-        private Int32[] RollOrder = { 0, 0, 0, 0 };
+        private Int32[] rollOrder = { 0, 0, 0, 0 };
 
         public Monopoly()
         {
             DetermineOrder();
             DistinctOrder();
-            stringToPlayer.Add("player1", player1);
-            stringToPlayer.Add("player2", player2);
-            stringToPlayer.Add("player3", player3);
-            stringToPlayer.Add("player4", player4);
+            StringToPlayer.Add("player1", player1);
+            StringToPlayer.Add("player2", player2);
+            StringToPlayer.Add("player3", player3);
+            StringToPlayer.Add("player4", player4);
 
-            order.Add(RollOrder[0], player1);
-            order.Add(RollOrder[1], player2);
-            order.Add(RollOrder[2], player3);
-            order.Add(RollOrder[3], player4);
+            Order.Add(rollOrder[0], player1);
+            Order.Add(rollOrder[1], player2);
+            Order.Add(rollOrder[2], player3);
+            Order.Add(rollOrder[3], player4);
             RunMonopoly(20);
         }
+
         public Player GetPlayer(Int32 number)
         {
             switch (number)
@@ -51,81 +51,76 @@ namespace MonopolyKata
 
         public Int32 DistinctOrder()
         {
-            return (RollOrder[0] + RollOrder[1] + RollOrder[2] + RollOrder[3]);
+            return (rollOrder[0] + rollOrder[1] + rollOrder[2] + rollOrder[3]);
         }
 
         private void DetermineOrder()
         {
             Random order = new Random();
-            RollOrder[0] = order.Next(1, 4);
-            RollOrder[1] = order.Next(1, 4);
-            while (RollOrder[1] == RollOrder[0])
-                RollOrder[1] = order.Next(1, 4);
+            rollOrder[0] = order.Next(1, 4);
+            rollOrder[1] = order.Next(1, 4);
+            while (rollOrder[1] == rollOrder[0])
+                rollOrder[1] = order.Next(1, 4);
 
-            RollOrder[2] = order.Next(1, 4);
-            while (RollOrder[2] == RollOrder[1] || RollOrder[2] == RollOrder[0])
-                RollOrder[2] = order.Next(1, 4);
+            rollOrder[2] = order.Next(1, 4);
+            while (rollOrder[2] == rollOrder[1] || rollOrder[2] == rollOrder[0])
+                rollOrder[2] = order.Next(1, 4);
 
-            var tempValue = (RollOrder[0] + RollOrder[1] + RollOrder[2]);
+            var tempValue = (rollOrder[0] + rollOrder[1] + rollOrder[2]);
             switch (tempValue)
             {
                 case 6:
-                    RollOrder[3] = 4;
+                    rollOrder[3] = 4;
                     break;
                 case 8:
-                    RollOrder[3] = 2;
+                    rollOrder[3] = 2;
                     break;
                 case 9:
-                    RollOrder[3] = 1;
+                    rollOrder[3] = 1;
                     break;
                 default:
-                    RollOrder[3] = 3;
+                    rollOrder[3] = 3;
                     break;
             }
         }
 
-        public void RunMonopoly(Int32 numberOfRounds)
+        public void RunMonopoly(Int32 maxNumberOfRounds)
         {
-            var i = 0;
-            while (i < numberOfRounds)
+            var currentNumberOfRounds = 0;
+            while (currentNumberOfRounds < maxNumberOfRounds)
             {
-                var j = 1;
-                while (j < 5)
+                var playerNumber = 1;
+                while (playerNumber < 5)
                 {
-                    //var MoneyTransfer = 0;
-                    //roll dice
-                    order[j].RollDicePair(gameBoard);
-                    var currentLocation = order[j].currentLocation;
-                    order[j].BasicAccountTransfers(currentLocation, gameBoard);
-                    //buy properties
-                    switch (gameBoard.GetStatus(currentLocation))
+                    Order[playerNumber].RollDicePair(GameBoard);
+                    var currentLocation = Order[playerNumber].CurrentLocation;
+                    Order[playerNumber].BasicAccountTransfers(currentLocation, GameBoard);
+                    switch (GameBoard.GetStatus(currentLocation))
                     {
                         case "UNAVAILABLE":
-                            if (gameBoard.GetOwnerName(currentLocation) != order[j].ToString())
+                            if (GameBoard.GetOwnerName(currentLocation) != Order[playerNumber].ToString())
                             {
                                 var owner = DetermineOwnerOfLocation(currentLocation);
-                                var type = gameBoard.GetType(currentLocation);
+                                var type = GameBoard.GetType(currentLocation);
                                 var multiplier = CalculateMultipleGroupMultiplier(owner, currentLocation);
-                                var ownerOfProperty = stringToPlayer[owner];
-                                var rentOwed = gameBoard.GetInitialRent(currentLocation) * multiplier;
+                                var ownerOfProperty = StringToPlayer[owner];
+                                var rentOwed = GameBoard.GetInitialRent(currentLocation) * multiplier;
 
-                                order[j].accountBalance -= rentOwed;
-                                ownerOfProperty.accountBalance += rentOwed;
+                                Order[playerNumber].AccountBalance -= rentOwed;
+                                ownerOfProperty.AccountBalance += rentOwed;
                             }
                             break;
                         case "AVAILABLE":
-                            order[j].PurchaseProperties(currentLocation, gameBoard);
-                            gameBoard.SetOwnerName(currentLocation, order[j].ToString());
+                            Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);
+                            GameBoard.SetOwnerName(currentLocation, Order[playerNumber].ToString());
                             break;
                         case "LOCKED":
                             //do something
                             break;
-
                     }
-                    j++;
+                    playerNumber++;
                 }
-
-                i++;
+                currentNumberOfRounds++;
             }
         }
 
@@ -133,18 +128,15 @@ namespace MonopolyKata
         {
             var multiplier = 1;
             var count = 0;
-            var person = stringToPlayer[owner];
-            var type = gameBoard.GetType(currentLocation);
-            var color = gameBoard.GetColor(currentLocation);
-
-            switch (gameBoard.GetType(currentLocation))
+            var person = StringToPlayer[owner];
+            var type = GameBoard.GetType(currentLocation);
+            var color = GameBoard.GetColor(currentLocation);
+            switch (GameBoard.GetType(currentLocation))
             {
                 case "Property":
-                    foreach (String element in person.ownedProperties)
-                    {
-                        if (person.propertyColor[element] == color)
+                    foreach (String element in person.OwnedProperties)
+                        if (person.PropertyColor[element] == color)
                             count++;
-                    }
                     if (count == 2 && color == "Blue" || color == "Pink")
                         multiplier = 2;
                     else if (count == 3 && color != "Blue" && color != "Pink" && color != null)
@@ -152,15 +144,15 @@ namespace MonopolyKata
                     break;
                 case "Utility":
 
-                    foreach (String element in person.ownedProperties)
-                        if (person.typeOfProperty[element] == type)
+                    foreach (String element in person.OwnedProperties)
+                        if (person.TypeOfProperty[element] == type)
                             count++;
                     if (count == 2)
                         multiplier = 10 / 4;
                     break;
                 case "Railroad":
-                    foreach (String element in person.ownedProperties)
-                        if (person.typeOfProperty[element] == type)
+                    foreach (String element in person.OwnedProperties)
+                        if (person.TypeOfProperty[element] == type)
                             count++;
                     switch (count)
                     {
@@ -174,19 +166,23 @@ namespace MonopolyKata
                             multiplier = 8;
                             break;
                     }
-
                     break;
                 case "Special":
                     break;
             }
-
             return multiplier;
         }
 
         private String DetermineOwnerOfLocation(Int32 currentLocation)
         {
-            return gameBoard.GetOwnerName(currentLocation);
+            return GameBoard.GetOwnerName(currentLocation);
         }
 
     }
+
+
+    //Land in Jail
+        //draw go to jail
+        //land on go to jail
+        //throws doubles three times in a row
 }

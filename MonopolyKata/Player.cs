@@ -6,25 +6,24 @@ namespace MonopolyKata
 {
     public class Player
     {
-        public Int32 currentLocation { get; set; }
-        public Int32 accountBalance { get; set; }
-
-        public List<String> ownedProperties = new List<String>();
-        public Dictionary<String, String> propertyColor = new Dictionary<String, String>();
-        public Dictionary<String, String> typeOfProperty = new Dictionary<String, String>();
-        public List<String> mortgagedProperties = new List<String>();
-
+        public Int32 CurrentLocation { get; set; }
+        public Int32 AccountBalance { get; set; }
+        public Int32 RollOrder { get; set; }
+        public List<String> OwnedProperties = new List<String>();
+        public Dictionary<String, String> PropertyColor = new Dictionary<String, String>();
+        public Dictionary<String, String> TypeOfProperty = new Dictionary<String, String>();
+        public List<String> MortgagedProperties = new List<String>();
         private Int32 currentDiceRoll = 0;
 
-        public Int32 rollOrder { get; set; }
         public Player()
         {
-            currentLocation = 0;
-            accountBalance = 0;
+            CurrentLocation = 0;
+            AccountBalance = 0;
         }
+
         public Int32 GetAccountBalance()
         {
-            return accountBalance;
+            return AccountBalance;
         }
 
         public void BasicAccountTransfers(Int32 location, Board gameBoard)
@@ -32,19 +31,19 @@ namespace MonopolyKata
             switch (gameBoard.GetName(location))
             {
                 case "Go":
-                    accountBalance += 200;
+                    AccountBalance += 200;
                     break;
                 case "Go To Jail":
-                    currentLocation = 41;
+                    CurrentLocation = 41;
                     break;
                 case "Income Tax":
-                    if (accountBalance * (.20) > 200)
-                        accountBalance -= 200;
+                    if (AccountBalance * (.20) > 200)
+                        AccountBalance -= 200;
                     else
-                        accountBalance -= (Int32)(accountBalance * (.20));
+                        AccountBalance -= (Int32)(AccountBalance * (.20));
                     break;
                 case "Luxury Tax":
-                    accountBalance -= 75;
+                    AccountBalance -= 75;
                     break;
                 default:
                     break;
@@ -53,27 +52,27 @@ namespace MonopolyKata
 
         public Int32 GetCurrentLocation()
         {
-            return currentLocation;
+            return CurrentLocation;
         }
 
         private void SetNewLocation(Int32 value, Board gameBoard)
         {
-            if ((currentLocation + value) <= 40)
+            if ((CurrentLocation + value) <= 40)
             {
-                currentLocation += value;
+                CurrentLocation += value;
             }
             else
             {
                 var count = 0;
-                while (currentLocation <= 40)
+                while (CurrentLocation <= 40)
                 {
-                    currentLocation += value;
+                    CurrentLocation += value;
                     count++;
                 }
-                if (currentLocation > 40)
-                    accountBalance += 200;
+                if (CurrentLocation > 40)
+                    AccountBalance += 200;
 
-                currentLocation = value - count;
+                CurrentLocation = value - count;
             }
         }
 
@@ -82,9 +81,9 @@ namespace MonopolyKata
             var property = gameBoard.GetName(currentLocation);
             var color = gameBoard.GetColor(currentLocation);
             var type = gameBoard.GetType(currentLocation);
-            ownedProperties.Add(property);
-            propertyColor.Add(property, color);
-            typeOfProperty.Add(property, type);
+            OwnedProperties.Add(property);
+            PropertyColor.Add(property, color);
+            TypeOfProperty.Add(property, type);
             ChargeAccount(currentLocation, gameBoard);
             gameBoard.SetStatus(currentLocation, "UNAVAILABLE");
         }
@@ -92,13 +91,19 @@ namespace MonopolyKata
         private void ChargeAccount(int currentLocation, Board gameBoard)
         {
             var price = gameBoard.GetAmount(currentLocation);
-            accountBalance -= price;
+            AccountBalance -= price;
         }
 
         public Int32 RollDicePair(Board gameBoard)
         {
             Random dice = new Random();
-            var tempV = dice.Next(1, 6) + dice.Next(1, 6);
+            var numDoubles = 0;
+            var dice1 = dice.Next(1, 6);
+            var dice2 = dice.Next(1, 6);
+            if (dice1 == dice2)
+                numDoubles++;
+
+            var tempV = dice1 + dice2;
             currentDiceRoll = tempV;
             SetNewLocation(tempV, gameBoard);
             return tempV;
