@@ -12,7 +12,7 @@ namespace MonopolyKata
         public Board GameBoard = new Board();                                                                           //1 Gameboard
         private Player player1 = new Player();                                                                          //4 Players
         private Player player2 = new Player();
-        private Player player3 = new Player();
+        private Player player3 = new Player(); 
         private Player player4 = new Player();
         private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                     //1 Int Array
 
