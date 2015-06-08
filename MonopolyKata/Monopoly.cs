@@ -7,12 +7,13 @@ namespace MonopolyKata
     public class Monopoly                                                                                               //Total Usage for Class: 9 Objects/Instances created | Total Calls To Other Classes: 18
     {                                                                                                                   //Breakdown:
         public Dictionary<Int32, Player> Order = new Dictionary<Int32, Player>();                                       //3 Dictionaries
-        public Dictionary<Owner, Player> OwnerToPlayer = new Dictionary<Owner, Player>();                   
+        public Dictionary<Owner, Player> OwnerToPlayer = new Dictionary<Owner, Player>();
         public Dictionary<Player, Owner> PlayerToOwner = new Dictionary<Player, Owner>();
+        public CardStacks CardStacks = new CardStacks();
         public Board GameBoard = new Board();                                                                           //1 Gameboard
         private Player player1 = new Player();                                                                          //4 Players
         private Player player2 = new Player();
-        private Player player3 = new Player(); 
+        private Player player3 = new Player();
         private Player player4 = new Player();
         private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                     //1 Int Array
 
@@ -20,7 +21,13 @@ namespace MonopolyKata
         {
             DetermineOrder();
             DistinctOrder();
-            OwnerToPlayer.Add(Owner.PLAYER_ONE, player1);                                                 
+            SetUpPlayers();
+            RunMonopoly(20);
+        }
+
+        private void SetUpPlayers()
+        {
+            OwnerToPlayer.Add(Owner.PLAYER_ONE, player1);
             OwnerToPlayer.Add(Owner.PLAYER_TWO, player2);
             OwnerToPlayer.Add(Owner.PLAYER_THREE, player3);
             OwnerToPlayer.Add(Owner.PLAYER_FOUR, player4);
@@ -34,7 +41,6 @@ namespace MonopolyKata
             Order.Add(rollOrder[1], player2);
             Order.Add(rollOrder[2], player3);
             Order.Add(rollOrder[3], player4);
-            RunMonopoly(20);
         }
 
         public Player GetPlayer(Int32 number)                                                                           //Total Usage for Method: 4/9 Objects/Instances | Total Calls To Other Classes: 0/18
@@ -92,6 +98,11 @@ namespace MonopolyKata
 
         public void RunMonopoly(Int32 maxNumberOfRounds)                                                                //Total Usage For Method: 9/9 Objects/Instances | Total Calls To Other Classes: 11/18                                   
         {
+            MonopolyLogic(maxNumberOfRounds);
+        }
+
+        private void MonopolyLogic(Int32 maxNumberOfRounds)
+        {
             var currentNumberOfRounds = 0;
             while (currentNumberOfRounds < maxNumberOfRounds)
             {
@@ -101,6 +112,30 @@ namespace MonopolyKata
                     Order[playerNumber].RollDicePair(GameBoard);                                                        //1 Dictionary
                     var currentLocation = Order[playerNumber].CurrentLocation;
                     Order[playerNumber].BasicAccountTransfers(currentLocation, GameBoard);
+                    var loc = GameBoard.GetLocation(currentLocation);
+                    if (loc == Location.CHANCE)
+                    {
+                        if (CardStacks.ChanceDeckSize == 0)
+                        {
+                            CardStacks.ResetDeckOfCards(CardStacks.ChanceDeck, 5, Location.CHANCE);
+                        }
+                        var chanceDeck = CardStacks.ChanceDeck;
+                        var card = CardStacks.TakeCardOffStack(chanceDeck, loc);
+                        if (card == Cards.GET_OUT_OF_JAIL_FREE)
+                            Order[playerNumber].NumberOfGetOutOfJailFreeCards++;
+
+                    }
+                    else if (loc == Location.COMMUNITY_CHEST)
+                    {
+                        if (CardStacks.CommunityDeckSize == 0)
+                            CardStacks.ResetDeckOfCards(CardStacks.CommunityDeck, 5, Location.COMMUNITY_CHEST);
+
+                        var communityDeck = CardStacks.CommunityDeck;
+                        var card = CardStacks.TakeCardOffStack(communityDeck, loc);
+                        if (card == Cards.GET_OUT_OF_JAIL_FREE)
+                            Order[playerNumber].NumberOfGetOutOfJailFreeCards++;
+
+                    }
                     switch (GameBoard.GetStatus(currentLocation))                                                       //1 GameBoard
                     {
                         case Status.UNAVAILABLE:                                                                        //3 Enums
@@ -113,16 +148,20 @@ namespace MonopolyKata
                                 var rentOwed = GameBoard.GetRent(currentLocation) * multiplier;
 
                                 Order[playerNumber].AccountBalance -= rentOwed;
-                                ownerOfProperty.AccountBalance += rentOwed;                                                 
+                                ownerOfProperty.AccountBalance += rentOwed;
                             }
                             break;
                         case Status.AVAILABLE:
-                            Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);                             
+                            Order[playerNumber].PurchaseProperties(currentLocation, GameBoard);
                             var player = Order[playerNumber];
-                            GameBoard.SetOwnerName(currentLocation, PlayerToOwner[player]);                                
+                            GameBoard.SetOwnerName(currentLocation, PlayerToOwner[player]);
                             break;
                         case Status.LOCKED:
-                            //do something
+                            if (GameBoard.GetLocation(currentLocation) == Location.GO_TO_JAIL)
+                            {
+                                Order[playerNumber].PlayerStatus = PlayerStatus.JAILED;
+                                Order[playerNumber].CurrentLocation = 10;
+                            }
                             break;
                     }
                     playerNumber++;
@@ -182,10 +221,4 @@ namespace MonopolyKata
 
 
     }
-
-    //Notes:
-    //Land in Jail
-        //draw go to jail
-        //land on go to jail
-        //throws doubles three times in a row
 }

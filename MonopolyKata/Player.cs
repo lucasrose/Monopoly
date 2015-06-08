@@ -4,17 +4,18 @@ using System.Collections.Generic;
 
 namespace MonopolyKata
 {
-    public enum PlayerStatus{FREE, JAILED};
+    public enum PlayerStatus { FREE, JAILED };
     public class Player                                                                                             //Total Usage For Class: 8 Objects/Instances | Total Calls To Other Classes: 7
     {
-        public Int32 CurrentLocation {get; set;}
-        public Int32 AccountBalance {get; set;}
-        public Int32 RollOrder {get; set;}
+        public Int32 CurrentLocation { get; set; }
+        public Int32 AccountBalance { get; set; }
+        public Int32 RollOrder { get; set; }
         public Int32 NumberOfRoundsInJail;
         public List<Location> OwnedProperties = new List<Location>();                                               //1 List, 1 Enum
+        public Int32 NumberOfGetOutOfJailFreeCards { get; set; }
         public Dictionary<Location, Color> PropertyColor = new Dictionary<Location, Color>();                       //1 Dictionary, 1 Enum
         public Dictionary<Location, Type> TypeOfProperty = new Dictionary<Location, Type>();                        //1 Dictionary, 1 Enum
-        public PlayerStatus PlayerStatus {get; set;}
+        public PlayerStatus PlayerStatus { get; set; }
         public List<String> MortgagedProperties = new List<String>();                                               //1 List, 1 String
         private Int32 currentDiceRoll = 0;
 
@@ -23,6 +24,7 @@ namespace MonopolyKata
             CurrentLocation = 0;
             AccountBalance = 0;
             NumberOfRoundsInJail = 0;
+            NumberOfGetOutOfJailFreeCards = 0;
             PlayerStatus = PlayerStatus.FREE;
         }
 
@@ -103,18 +105,24 @@ namespace MonopolyKata
         public Int32 RollDicePair(Board gameBoard)                                                                  //Total Usage For Method: 2/8 Objects/Instances | Total Calls To Other Classes: 1/7
         {                                                                                                           //1 GameBoard
             Random dice = new Random();                                                                             //1 Random
-            
+
             var numDoubles = 0;
             var dice1 = dice.Next(1, 6);
             var dice2 = dice.Next(1, 6);
             var tempV = dice1 + dice2;
             currentDiceRoll = tempV;
-            
+
 
             if (PlayerStatus.JAILED == PlayerStatus)
             {
+                if (NumberOfGetOutOfJailFreeCards > 0)
+                {
+                    PlayerStatus = PlayerStatus.FREE;
+                    SetNewLocation(CurrentLocation, gameBoard);
+                    NumberOfGetOutOfJailFreeCards--;
+                }
                 //they roll, if not doubles, increment count and dont move
-                if (dice1 != dice2 && NumberOfRoundsInJail < 3)
+                else if (dice1 != dice2 && NumberOfRoundsInJail < 3)
                 {
                     NumberOfRoundsInJail++;
                 }
@@ -122,6 +130,7 @@ namespace MonopolyKata
                 {
                     NumberOfRoundsInJail = 0;
                     PlayerStatus = PlayerStatus.FREE;
+                    AccountBalance -= 50;
                     SetNewLocation(currentDiceRoll, gameBoard);
                 }
                 //if double, reset count and move to that location
@@ -133,7 +142,7 @@ namespace MonopolyKata
                 {
                     if (numDoubles == 3)
                     {
-                        BasicAccountTransfers(31, gameBoard);
+                        BasicAccountTransfers(31, gameBoard); //sends player to jail
                         break;
                     }
                     numDoubles++;

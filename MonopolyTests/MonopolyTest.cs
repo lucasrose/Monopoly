@@ -4,7 +4,7 @@ namespace MonopolyKata
 {
     [TestClass]
     public class MonopolyTest                                                                           //Total Usage For Class: 1 Objects Created
-                                                                                                        //                       5 Accessed
+    //                       5 Accessed
     {
         private Monopoly monopoly = new Monopoly();
         private Player player1;                                                                        //Method Calls To Another Class: 4 (Same Method)
@@ -38,7 +38,7 @@ namespace MonopolyKata
         [TestMethod]
         public void TestMultiplierAccountFluctuationPlayer1()                                           //Total Usage For Method: 2/5 Objects
         {                                                                                               //Method Calls 2
-            var balanceBefore = player1.AccountBalance;                                                 
+            var balanceBefore = player1.AccountBalance;
             monopoly.RunMonopoly(3);
             var balanceAfter = player1.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
@@ -69,6 +69,24 @@ namespace MonopolyKata
             monopoly.RunMonopoly(3);
             var balanceAfter = player4.AccountBalance;
             Assert.AreNotEqual(balanceBefore, balanceAfter);
+        }
+
+        [TestMethod]
+        public void TestGetOutOfJailFreeCard()
+        {
+            player1.PlayerStatus = PlayerStatus.JAILED;
+            player1.NumberOfGetOutOfJailFreeCards = 1;
+            monopoly.RunMonopoly(20);
+            Assert.AreEqual(PlayerStatus.FREE, player1.PlayerStatus);
+        }
+
+        [TestMethod]
+        public void TestRemovalOfGetOutOfJailFreeCard()
+        {
+            player1.PlayerStatus = PlayerStatus.JAILED;
+            player1.NumberOfGetOutOfJailFreeCards = 1;
+            monopoly.RunMonopoly(20);
+            Assert.AreEqual(0, player1.NumberOfGetOutOfJailFreeCards);
         }
 
     }
