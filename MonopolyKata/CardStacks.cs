@@ -26,8 +26,8 @@ namespace MonopolyKata
         public Stack<Cards> ChanceDeck = new Stack<Cards>();
         public Stack<Cards> CommunityDeck = new Stack<Cards>();
 
-        public List<Cards> UsedChanceCards = new List<Cards>();
-        public List<Cards> UsedCommunityCards = new List<Cards>();
+        //public List<Cards> UsedChanceCards = new List<Cards>();
+        //public List<Cards> UsedCommunityCards = new List<Cards>();
 
 
         public CardStacks()
@@ -84,12 +84,12 @@ namespace MonopolyKata
             var card = deckOfCards.Pop();
             if (location == Location.CHANCE)
             {
-                UsedChanceCards.Add(card);
+                //UsedChanceCards.Add(card);
                 ChanceDeckSize--;
             }
             else if (location == Location.COMMUNITY_CHEST)
             {
-                UsedCommunityCards.Add(card);
+                //UsedCommunityCards.Add(card);
                 CommunityDeckSize--;
             }
             return card;
@@ -99,23 +99,23 @@ namespace MonopolyKata
         {
             if (location == Location.CHANCE)
             {
-                ShuffleOfCards(UsedChanceCards, numberOfTimesToShuffle);
-                NewChanceCards.Clear();
-                NewChanceCards = UsedChanceCards;
+                //ShuffleOfCards(UsedChanceCards, numberOfTimesToShuffle);
+                //NewChanceCards.Clear();
+                //NewChanceCards = UsedChanceCards;
                 ChanceDeckSize = 16;
                 StraightenUpDeckOfCards(deckOfCards, NewChanceCards);
-                UsedChanceCards.Clear();
+                //UsedChanceCards.Clear();
 
-                
+
             }
             else if (location == Location.COMMUNITY_CHEST)
             {
-                ShuffleOfCards(UsedCommunityCards, numberOfTimesToShuffle);
-                NewCommunityCards.Clear();
-                NewCommunityCards = UsedCommunityCards;
+                //ShuffleOfCards(UsedCommunityCards, numberOfTimesToShuffle);
+                //NewCommunityCards.Clear();
+                //NewCommunityCards = UsedCommunityCards;
                 CommunityDeckSize = 15;
                 StraightenUpDeckOfCards(deckOfCards, NewCommunityCards);
-                UsedCommunityCards.Clear();
+                //UsedCommunityCards.Clear();
 
             }
 

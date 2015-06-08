@@ -96,7 +96,7 @@ namespace MonopolyKata
             gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);                                               //1 Enum
         }
 
-        private void ChargeAccount(int currentLocation, Board gameBoard)                                            //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 1/7
+        private void ChargeAccount(Int32 currentLocation, Board gameBoard)                                            //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 1/7
         {
             var price = gameBoard.GetAmount(currentLocation);                                                       //1 GameBoard
             AccountBalance -= price;

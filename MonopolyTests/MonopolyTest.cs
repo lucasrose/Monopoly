@@ -11,6 +11,7 @@ namespace MonopolyKata
         private Player player2;
         private Player player3;
         private Player player4;
+        private CardStacks CardStacks;
 
         [TestInitialize]
         public void SetUp()
@@ -19,6 +20,7 @@ namespace MonopolyKata
             player2 = monopoly.GetPlayer(2);
             player3 = monopoly.GetPlayer(3);
             player4 = monopoly.GetPlayer(4);
+            CardStacks = monopoly.CardStacks;
         }
 
         [TestMethod]
@@ -71,6 +73,7 @@ namespace MonopolyKata
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 
+
         [TestMethod]
         public void TestGetOutOfJailFreeCard()
         {
@@ -89,5 +92,12 @@ namespace MonopolyKata
             Assert.AreEqual(0, player1.NumberOfGetOutOfJailFreeCards);
         }
 
+        [TestMethod]
+        public void CardStacksChange()
+        {
+            var cardStackTopItem = CardStacks.ChanceDeck.Peek();
+            monopoly.RunMonopoly(3);
+            Assert.AreNotEqual(CardStacks.ChanceDeck.Peek(), cardStackTopItem);
+        }
     }
 }

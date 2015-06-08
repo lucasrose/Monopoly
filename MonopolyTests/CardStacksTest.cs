@@ -14,8 +14,8 @@ namespace MonopolyTests
         public Stack<Cards> ChanceDeck;
         public Stack<Cards> CommunityDeck;
 
-        public List<Cards> UsedChanceCards;
-        public List<Cards> UsedCommunityCards;
+        //public List<Cards> UsedChanceCards;
+        //public List<Cards> UsedCommunityCards;
 
         [TestInitialize]
         public void SetUp()
@@ -26,8 +26,8 @@ namespace MonopolyTests
             ChanceDeck = stacks.ChanceDeck;
             CommunityDeck = stacks.CommunityDeck;
 
-            UsedChanceCards = stacks.UsedChanceCards;
-            UsedCommunityCards = stacks.UsedCommunityCards;
+            //UsedChanceCards = stacks.UsedChanceCards;
+            //UsedCommunityCards = stacks.UsedCommunityCards;
         }
         [TestMethod]
         public void TestShuffleChanceCards()
@@ -143,8 +143,8 @@ namespace MonopolyTests
         {
             var oldTopCard = ChanceDeck.Peek();
             TestChanceDeckSizeIncreasesAfterReset();
-            Assert.AreNotEqual(oldTopCard, ChanceDeck.Peek());
-            
+            Assert.AreEqual(oldTopCard, ChanceDeck.Peek());
+
         }
 
         [TestMethod]
@@ -152,7 +152,7 @@ namespace MonopolyTests
         {
             var oldTopCard = CommunityDeck.Peek();
             TestCommunityDeckSizeIncreasesAfterReset();
-            Assert.AreNotEqual(oldTopCard, CommunityDeck.Peek());
+            Assert.AreEqual(oldTopCard, CommunityDeck.Peek());
 
         }
 
