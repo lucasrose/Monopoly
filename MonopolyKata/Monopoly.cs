@@ -15,7 +15,7 @@ namespace MonopolyKata
         private Player player2 = new Player();
         private Player player3 = new Player();
         private Player player4 = new Player();
-        private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                     //1 Int Array
+        private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                   //1 Int Array
 
         public Monopoly()
         {

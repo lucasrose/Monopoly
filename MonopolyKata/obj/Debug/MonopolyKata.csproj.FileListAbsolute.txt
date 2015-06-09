@@ -3,7 +3,6 @@ C:\Users\lrose\Documents\GildedRose Kata\MonopolyKata\MonopolyKata\bin\Debug\Mon
 C:\Users\lrose\Documents\GildedRose Kata\MonopolyKata\MonopolyKata\obj\Debug\MonopolyKata.csprojResolveAssemblyReference.cache
 C:\Users\lrose\Documents\GildedRose Kata\MonopolyKata\MonopolyKata\obj\Debug\MonopolyKata.dll
 C:\Users\lrose\Documents\GildedRose Kata\MonopolyKata\MonopolyKata\obj\Debug\MonopolyKata.pdb
-C:\Users\lrose\Documents\Monopoly\MonopolyKata\obj\Debug\MonopolyKata.csprojResolveAssemblyReference.cache
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\bin\Debug\MonopolyKata.dll
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\bin\Debug\MonopolyKata.pdb
 C:\Users\lrose\Documents\Monopoly\MonopolyKata\obj\Debug\MonopolyKata.dll

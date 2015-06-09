@@ -65,7 +65,7 @@ namespace MonopolyKata
 
         private void SetNewLocation(Int32 value, Board gameBoard)                                                   //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 0/7
         {
-            if ((CurrentLocation + value) <= 40)
+            /*if ((CurrentLocation + value) <= 39)
             {
                 CurrentLocation += value;
             }
@@ -81,6 +81,18 @@ namespace MonopolyKata
                     AccountBalance += 200;
 
                 CurrentLocation = value - count;
+            }
+            CurrentLocation = 1000000;
+             * */
+
+            if ((CurrentLocation + value) > 39)
+            {
+                CurrentLocation += value - 39;
+                AccountBalance += 200;
+            }
+            else
+            {
+                CurrentLocation += value;
             }
         }
 

@@ -15,7 +15,6 @@ namespace MonopolyKata
 
         private void SetupBoard()
         {                                                                                                                                   //Total Usage For Method: 6/2 Objects/Instances | Total Calls To Other Classes: 0
-            
             gameBoard.Add(NewItem(Location.GO, Color.NULL, 200, Status.LOCKED, Type.SPECIAL, Owner.NULL, 0));                               //5 Enumms
             gameBoard.Add(NewItem(Location.MEDITERRANEAN_AVENUE, Color.BROWN, 60, Status.AVAILABLE, Type.PROPERTY, Owner.NULL, 2));         //1 Gameboard
             gameBoard.Add(NewItem(Location.COMMUNITY_CHEST, Color.NULL, 0, Status.LOCKED, Type.SPECIAL, Owner.NULL, 0));

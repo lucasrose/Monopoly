@@ -41,7 +41,7 @@ namespace MonopolyTests
             Assert.AreEqual(200, accountBalance);
         }
 
-        /*                                                              //changing with Release 4
+                                                                      //changing with Release 4
          [TestMethod]
         public void TestGoToJail()
         {
@@ -66,7 +66,7 @@ namespace MonopolyTests
         {
             Player1.AccountBalance = 60;
             var currentLocation = Player1.CurrentLocation = 4;
-            Player1.BasicAccountTransfers(currentLocation, GameBoard);
+            Player1.BasicAccountTransfers(4, GameBoard);
             var accountBalance = Player1.GetAccountBalance();
             Assert.AreEqual(48, accountBalance);
         }
@@ -79,7 +79,7 @@ namespace MonopolyTests
             Player1.BasicAccountTransfers(currentLocation, GameBoard);
             var accountBalance = Player1.GetAccountBalance();
             Assert.AreEqual(925, accountBalance);
-        }*/
+        }
 
     }
 }

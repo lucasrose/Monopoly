@@ -92,12 +92,6 @@ namespace MonopolyKata
             Assert.AreEqual(0, player1.NumberOfGetOutOfJailFreeCards);
         }
 
-        [TestMethod]
-        public void CardStacksChange()
-        {
-            var cardStackTopItem = CardStacks.ChanceDeck.Peek();
-            monopoly.RunMonopoly(3);
-            Assert.AreNotEqual(CardStacks.ChanceDeck.Peek(), cardStackTopItem);
-        }
+        
     }
 }
