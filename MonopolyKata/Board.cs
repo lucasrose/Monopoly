@@ -56,7 +56,6 @@ namespace MonopolyKata
             gameBoard.Add(NewItem(Location.LUXURY_TAX, Color.NULL, -75, Status.LOCKED, Type.SPECIAL, Owner.NULL, 0));
             gameBoard.Add(NewItem(Location.BOARDWALK, Color.BLUE, 400, Status.AVAILABLE, Type.PROPERTY, Owner.NULL, 50));
             gameBoard.Add(NewItem(Location.JUST_VISITING, Color.NULL, 0, Status.LOCKED, Type.SPECIAL, Owner.NULL, 0));               //40
-
         }
 
         public BoardSlot NewItem(Location location, Color color, Int32 amount, Status status, Type type, Owner owner, Int32 rent)           //Total Usage For Method: 6/2 Objects/Instances | Total Calls To Other Classes: 0    

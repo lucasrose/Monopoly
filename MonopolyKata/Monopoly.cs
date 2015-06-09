@@ -15,7 +15,7 @@ namespace MonopolyKata
         private Player player2 = new Player();
         private Player player3 = new Player();
         private Player player4 = new Player();
-        private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                   //1 Int Array
+        private Int32[] rollOrder = { 0, 0, 0, 0 };                                                                     //1 Int Array
 
         public Monopoly()
         {
@@ -114,7 +114,6 @@ namespace MonopolyKata
                     var loc = GameBoard.GetLocation(currentLocation);
                     BuyOrPayRent(playerNumber, currentLocation);
                     Order[playerNumber].BasicAccountTransfers(currentLocation, GameBoard);
-                   
 
                     playerNumber++;
                 }
@@ -149,28 +148,21 @@ namespace MonopolyKata
                 case Status.LOCKED:
                     var loc = GameBoard.GetLocation(currentLocation);
                     ChanceAndCommunityCardActions(playerNumber, loc);
-                    if (loc == Location.GO_TO_JAIL)
-                    {
-                        Order[playerNumber].PlayerStatus = PlayerStatus.JAILED;
-                        Order[playerNumber].CurrentLocation = 10;
-                    }
                     break;
 
             }
         }
 
-        private void ChanceAndCommunityCardActions(Int32 playerNumber, Location loc)
+        public void ChanceAndCommunityCardActions(Int32 playerNumber, Location loc)
         {
-
             var player = Order[playerNumber];
             var currLoc = player.CurrentLocation;
 
             if (loc == Location.CHANCE)
             {
                 if (CardStacks.ChanceDeckSize == 0)
-                {
                     CardStacks.ResetDeckOfCards(CardStacks.ChanceDeck, 5, Location.CHANCE);
-                }
+
                 var chanceCard = CardStacks.TakeCardOffStack(CardStacks.ChanceDeck, loc);
 
                 switch (chanceCard)
@@ -236,7 +228,7 @@ namespace MonopolyKata
 
                         break;
 
-                    case Cards.GO_TO_JAIL:  ///
+                    case Cards.GO_TO_JAIL:
                         currLoc = 31;
                         player.BasicAccountTransfers(currLoc, GameBoard);
                         break;
@@ -260,7 +252,7 @@ namespace MonopolyKata
                         break;
 
                     case Cards.CHAIRMAN_OF_BOARD:
-                        for (var i = 0; i < 5; i++)
+                        for (var i = 1; i < 5; i++)
                         {
                             if (Order[i] != player)
                             {
@@ -302,7 +294,7 @@ namespace MonopolyKata
                         break;
 
                     case Cards.GRAND_OPERA:
-                        for (var i = 0; i < 5; i++)
+                        for (var i = 1; i < 5; i++)
                         {
                             if (Order[i] != player)
                             {
@@ -321,7 +313,7 @@ namespace MonopolyKata
                         break;
 
                     case Cards.YOUR_BIRTHDAY:
-                        for (var i = 0; i < 5; i++)
+                        for (var i = 1; i < 5; i++)
                         {
                             if (Order[i] != player)
                             {
@@ -359,7 +351,7 @@ namespace MonopolyKata
                         player.AccountBalance += 00;
                         break;
 
-                    case Cards.GO_TO_JAIL:///
+                    case Cards.GO_TO_JAIL:
                         player.CurrentLocation = 0;
                         player.BasicAccountTransfers(0, GameBoard);
                         break;

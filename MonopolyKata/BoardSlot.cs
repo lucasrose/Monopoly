@@ -23,7 +23,6 @@ namespace MonopolyKata
 
     public class BoardSlot                                                                                                          //Total Usage For Class: 5 Objects/Instances | Total Calls To Other Classes: 0
     {
-
         public Location Location { get; set; }
         public Color Color { get; set; }
         public Int32 Amount { get; set; }
@@ -31,17 +30,15 @@ namespace MonopolyKata
         public Type Type { get; set; }
         public Owner Owner { get; set; }
         public Int32 Rent { get; set; }
-
-
-
+        
         public BoardSlot(Location Location, Color Color, Int32 Amount, Status Status, Type Type, Owner Owner, Int32 Rent)
         {
-            Location = new Location();
-            Color = new Color();
+            this.Location = Location;
+            this.Color = Color;
             this.Amount = Amount;
-            Status = new Status();
-            Type = new Type();
-            Owner = new Owner();
+            this.Status = Status;
+            this.Type = Type;
+            this.Owner = Owner;
             this.Rent = Rent;
         }
 

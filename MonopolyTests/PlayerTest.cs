@@ -45,7 +45,7 @@ namespace MonopolyTests
          [TestMethod]
         public void TestGoToJail()
         {
-            var currentLocation = Player1.CurrentLocation = 30;
+            var currentLocation = Player1.CurrentLocation = 31;
             Player1.BasicAccountTransfers(currentLocation, GameBoard);
             var justVisiting = Player1.GetCurrentLocation();
             Assert.AreEqual(10, justVisiting);

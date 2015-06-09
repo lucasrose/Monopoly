@@ -4,7 +4,7 @@ namespace MonopolyKata
 {
     [TestClass]
     public class MonopolyTest                                                                           //Total Usage For Class: 1 Objects Created
-    //                       5 Accessed
+                                                                                                        //                       5 Accessed
     {
         private Monopoly monopoly = new Monopoly();
         private Player player1;                                                                        //Method Calls To Another Class: 4 (Same Method)
@@ -73,12 +73,11 @@ namespace MonopolyKata
             Assert.AreNotEqual(balanceBefore, balanceAfter);
         }
 
-
         [TestMethod]
         public void TestGetOutOfJailFreeCard()
         {
             player1.PlayerStatus = PlayerStatus.JAILED;
-            player1.NumberOfGetOutOfJailFreeCards = 1;
+            player1.NumberOfGetOutOfJailFreeCards = 100;
             monopoly.RunMonopoly(20);
             Assert.AreEqual(PlayerStatus.FREE, player1.PlayerStatus);
         }
@@ -88,10 +87,9 @@ namespace MonopolyKata
         {
             player1.PlayerStatus = PlayerStatus.JAILED;
             player1.NumberOfGetOutOfJailFreeCards = 1;
-            monopoly.RunMonopoly(20);
+            monopoly.RunMonopoly(1);
             Assert.AreEqual(0, player1.NumberOfGetOutOfJailFreeCards);
         }
 
-        
     }
 }

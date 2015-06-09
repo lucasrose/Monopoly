@@ -65,26 +65,6 @@ namespace MonopolyKata
 
         private void SetNewLocation(Int32 value, Board gameBoard)                                                   //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 0/7
         {
-            /*if ((CurrentLocation + value) <= 39)
-            {
-                CurrentLocation += value;
-            }
-            else
-            {
-                var count = 0;
-                while (CurrentLocation <= 40)
-                {
-                    CurrentLocation += value;
-                    count++;
-                }
-                if (CurrentLocation > 40)
-                    AccountBalance += 200;
-
-                CurrentLocation = value - count;
-            }
-            CurrentLocation = 1000000;
-             * */
-
             if ((CurrentLocation + value) > 39)
             {
                 CurrentLocation += value - 39;
@@ -101,11 +81,15 @@ namespace MonopolyKata
             var property = gameBoard.GetLocation(currentLocation);                                                  //1 GameBoard
             var color = gameBoard.GetColor(currentLocation);
             var type = gameBoard.GetType(currentLocation);
-            OwnedProperties.Add(property);                                                                          //3 Dictionaries
-            PropertyColor.Add(property, color);
-            TypeOfProperty.Add(property, type);
-            ChargeAccount(currentLocation, gameBoard);
-            gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);                                               //1 Enum
+            if (!OwnedProperties.Contains(property))
+            {
+                OwnedProperties.Add(property);                                                                          //3 Dictionaries
+                PropertyColor.Add(property, color);
+                TypeOfProperty.Add(property, type);
+                ChargeAccount(currentLocation, gameBoard);
+                gameBoard.SetStatus(currentLocation, Status.UNAVAILABLE);
+            }
+            //1 Enum
         }
 
         private void ChargeAccount(Int32 currentLocation, Board gameBoard)                                            //Total Usage For Method: 1/8 Objects/Instances | Total Calls To Other Classes: 1/7
@@ -117,7 +101,6 @@ namespace MonopolyKata
         public Int32 RollDicePair(Board gameBoard)                                                                  //Total Usage For Method: 2/8 Objects/Instances | Total Calls To Other Classes: 1/7
         {                                                                                                           //1 GameBoard
             Random dice = new Random();                                                                             //1 Random
-
             var numDoubles = 0;
             var dice1 = dice.Next(1, 6);
             var dice2 = dice.Next(1, 6);
