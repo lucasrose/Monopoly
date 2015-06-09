@@ -1,7 +1,0 @@
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\bin\Debug\MonopolyTests.dll
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\bin\Debug\MonopolyTests.pdb
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\bin\Debug\MonopolyKata.dll
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\bin\Debug\MonopolyKata.pdb
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\obj\Debug\MonopolyTests.csprojResolveAssemblyReference.cache
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\obj\Debug\MonopolyTests.dll
-C:\Users\lrose\Documents\Monopoly\MonopolyTests\obj\Debug\MonopolyTests.pdb

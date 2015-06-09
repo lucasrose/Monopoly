@@ -153,7 +153,7 @@ namespace MonopolyKata
             }
         }
 
-        public void ChanceAndCommunityCardActions(Int32 playerNumber, Location loc)
+        private void ChanceAndCommunityCardActions(Int32 playerNumber, Location loc)
         {
             var player = Order[playerNumber];
             var currLoc = player.CurrentLocation;
