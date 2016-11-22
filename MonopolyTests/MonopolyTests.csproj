@@ -53,6 +53,7 @@
     <Compile Include="MonopolyTest.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CardStacksTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

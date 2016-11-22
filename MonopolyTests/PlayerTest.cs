@@ -4,78 +4,80 @@ using MonopolyKata;
 namespace MonopolyTests
 {
     [TestClass]
-    public class PlayerTest
+    public class PlayerTest                                                                                 //Total Usage For Class: 2 Objects
     {
-        public Player player1 = new Player();
+        public Player Player1 = new Player();
+        public Board GameBoard = new Board();
 
         [TestMethod]
-        public void TestLocationUpdated()
+        public void TestLocationUpdated()                                                                   //Total Usage For Method: 2/2 Objects
         {
-            var tempLocation = player1.GetCurrentLocation();
-            player1.RollDicePair();
-            Assert.AreNotEqual(tempLocation, player1.GetCurrentLocation());
+            var tempLocation = Player1.GetCurrentLocation();
+            Player1.RollDicePair(GameBoard);
+            Assert.AreNotEqual(tempLocation, Player1.GetCurrentLocation());
         }
 
         [TestMethod]
-        public void TestDiceRoll()
+        public void TestRollDice()                                                                          //Total Usage For Method: 2/2  Objects
         {
-            Assert.IsTrue(player1.RollDicePair() >= 1 || player1.RollDicePair() <= 12);
+            Assert.IsTrue(Player1.RollDicePair(GameBoard) >= 1 || Player1.RollDicePair(GameBoard) <= 12);
         }
-        
+
         [TestMethod]
+        public void TestLandGo()                                                                            //Total Usage For Method: 2/2 Objects
+        {
+            var currentLocation = Player1.CurrentLocation = 0;
+            Player1.BasicAccountTransfers(currentLocation, GameBoard);
+            var accountBalance = Player1.GetAccountBalance();
+            Assert.AreEqual(200, accountBalance);
+        }
+
+        [TestMethod]
+        public void TestPassGo()                                                                            //Total Usage For Method: 2/2 Objects
+        {
+            var currentLocation = Player1.CurrentLocation = 40;
+            Player1.RollDicePair(GameBoard);
+            var accountBalance = Player1.GetAccountBalance();
+            Assert.AreEqual(200, accountBalance);
+        }
+
+                                                                      //changing with Release 4
+         [TestMethod]
         public void TestGoToJail()
         {
-            var currentLocation = player1.currentLocation = 30;
-            player1.AdjustAccountFunds(currentLocation);
-            var justVisiting = player1.GetCurrentLocation();
-            Assert.AreEqual(41, justVisiting);
-        }
-
-        [TestMethod]
-        public void TestLandGo()
-        {
-            var currentLocation = player1.currentLocation = 0;
-            player1.AdjustAccountFunds(currentLocation);
-            var accountBalance = player1.GetAccountBalance();
-            Assert.AreEqual(200, accountBalance);
-        }
-
-        [TestMethod]
-        public void TestPassGo()
-        {
-            var currentLocation = player1.currentLocation = 40;
-            player1.RollDicePair();
-            var accountBalance = player1.GetAccountBalance();
-            Assert.AreEqual(200, accountBalance);
+            var currentLocation = Player1.CurrentLocation = 30;
+            Player1.BasicAccountTransfers(currentLocation, GameBoard);
+            var justVisiting = Player1.GetCurrentLocation();
+            Assert.AreEqual(10, justVisiting);
         }
 
         [TestMethod]
         public void TestIncomeTax200()
         {
-            player1.accountBalance = 1000;
-            var currentLocation = player1.currentLocation = 4;
-            player1.AdjustAccountFunds(currentLocation);
-            var accountBalance = player1.GetAccountBalance();
+            Player1.AccountBalance = 1000;
+            var currentLocation = Player1.CurrentLocation = 4;
+            Player1.BasicAccountTransfers(currentLocation, GameBoard);
+            var accountBalance = Player1.GetAccountBalance();
             Assert.AreEqual(800, accountBalance);
         }
 
         [TestMethod]
         public void TestIncomeTax20Percent()
         {
-            player1.accountBalance = 60;
-            var currentLocation = player1.currentLocation = 4;
-            player1.AdjustAccountFunds(currentLocation);
-            var accountBalance = player1.GetAccountBalance();
+            Player1.AccountBalance = 60;
+            var currentLocation = Player1.CurrentLocation = 4;
+            Player1.BasicAccountTransfers(4, GameBoard);
+            var accountBalance = Player1.GetAccountBalance();
             Assert.AreEqual(48, accountBalance);
         }
 
         [TestMethod]
         public void TestLuxuryTax()
         {
-            player1.accountBalance = 1000;
-            var currentLocation = player1.currentLocation = 38;
-            player1.AdjustAccountFunds(currentLocation);
-            var accountBalance = player1.GetAccountBalance();
+            Player1.AccountBalance = 1000;
+            var currentLocation = Player1.CurrentLocation = 38;
+            Player1.BasicAccountTransfers(currentLocation, GameBoard);
+            var accountBalance = Player1.GetAccountBalance();
             Assert.AreEqual(925, accountBalance);
         }
 
